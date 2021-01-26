@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "categories")
-public class Category {
+public class Category extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long categoryid;
