@@ -1,6 +1,10 @@
 package com.jeffreyorndorff.productivity.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -23,6 +27,14 @@ public class User extends Auditable {
     private String lname;
 
     private String email;
+
+    /**
+     * Part of the join relationship between user and role
+     * connects users to the user role combination
+     */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "user", allowSetters = true)
+    private Set<UserRoles> roles = new HashSet<>();
 
     public User() {
         // used by JPA
@@ -82,5 +94,13 @@ public class User extends Auditable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<UserRoles> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<UserRoles> roles) {
+        this.roles = roles;
     }
 }
