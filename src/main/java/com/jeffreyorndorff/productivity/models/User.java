@@ -48,6 +48,10 @@ public class User extends Auditable {
     @JsonIgnoreProperties(value = "user", allowSetters = true)
     private Set<Task> tasks = new HashSet<>();
 
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "author", allowSetters = true)
+    private Set<Recipe> recipies = new HashSet<>();
+
     public User() {
         // used by JPA
     }
@@ -130,5 +134,13 @@ public class User extends Auditable {
 
     public void setItems(Set<UserItem> items) {
         this.items = items;
+    }
+
+    public Set<Recipe> getRecipies() {
+        return recipies;
+    }
+
+    public void setRecipies(Set<Recipe> recipies) {
+        this.recipies = recipies;
     }
 }

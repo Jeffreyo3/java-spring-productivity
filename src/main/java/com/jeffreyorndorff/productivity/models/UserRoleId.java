@@ -4,13 +4,13 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 /**
- * Class to represent the complex primary key for UserRoles
+ * Class to represent the complex primary key for UserRole
  */
 @Embeddable
 public class UserRoleId implements Serializable {
 
-        private long user;
-        private long role;
+    private long user;
+    private long role;
 
     public UserRoleId() {
         // Used by JPA

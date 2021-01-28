@@ -13,7 +13,7 @@ import java.io.Serializable;
 @IdClass(UserItemId.class)
 public class UserItem extends Auditable implements Serializable {
     /**
-     * 1/2 of the primary key (long) for userroles.
+     * 1/2 of the primary key (long) for useritems.
      * Also is a foreign key into the users table
      */
     @Id
@@ -23,8 +23,8 @@ public class UserItem extends Auditable implements Serializable {
     private User user;
 
     /**
-     * 1/2 of the primary key (long) for userroles.
-     * Also is a foreign key into the roles table
+     * 1/2 of the primary key (long) for useritems.
+     * Also is a foreign key into the items table
      */
     @Id
     @ManyToOne

@@ -29,6 +29,14 @@ public class Item extends Auditable {
     @JsonIgnoreProperties(value = "item", allowSetters = true)
     private Set<UserItem> users = new HashSet<>();
 
+    /**
+     * Part of the join relationship between item and recipe
+     * connects items to the recipies combination
+     */
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "item", allowSetters = true)
+    private Set<RecipeItem> recipes = new HashSet<>();
+
     public Item() {
         // Used by JPA
     }
@@ -77,5 +85,13 @@ public class Item extends Auditable {
 
     public void setUsers(Set<UserItem> users) {
         this.users = users;
+    }
+
+    public Set<RecipeItem> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(Set<RecipeItem> recipes) {
+        this.recipes = recipes;
     }
 }
