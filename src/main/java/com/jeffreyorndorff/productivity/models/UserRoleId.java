@@ -2,18 +2,17 @@ package com.jeffreyorndorff.productivity.models;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * Class to represent the complex primary key for UserRoles
  */
 @Embeddable
-public class UserRolesId implements Serializable {
+public class UserRoleId implements Serializable {
 
         private long user;
         private long role;
 
-    public UserRolesId() {
+    public UserRoleId() {
         // Used by JPA
     }
 
@@ -37,7 +36,7 @@ public class UserRolesId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserRolesId that = (UserRolesId) o;
+        UserRoleId that = (UserRoleId) o;
         return user == that.user && role == that.role;
     }
 

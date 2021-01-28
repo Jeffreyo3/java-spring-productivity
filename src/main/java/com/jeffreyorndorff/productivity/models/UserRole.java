@@ -17,8 +17,8 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "userroles")
-@IdClass(UserRolesId.class)
-public class UserRoles extends Auditable implements Serializable {
+@IdClass(UserRoleId.class)
+public class UserRole extends Auditable implements Serializable {
 
     /**
      * 1/2 of the primary key (long) for userroles.
@@ -40,11 +40,11 @@ public class UserRoles extends Auditable implements Serializable {
     @JsonIgnoreProperties(value = "users", allowSetters = true)
     private Role role;
 
-    public UserRoles() {
+    public UserRole() {
         // Used by JPA
     }
 
-    public UserRoles(User user, Role role) {
+    public UserRole(User user, Role role) {
         this.user = user;
         this.role = role;
     }
@@ -70,10 +70,10 @@ public class UserRoles extends Auditable implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof UserRoles)) {
+        if (!(o instanceof UserRole)) {
             return false;
         }
-        UserRoles that = (UserRoles) o;
+        UserRole that = (UserRole) o;
         return ((user == null) ? 0 : user.getUserid()) == ((that.user == null) ? 0 : that.user.getUserid()) &&
                 ((role == null) ? 0 : role.getRoleid()) == ((that.role == null) ? 0 : that.role.getRoleid());
     }
