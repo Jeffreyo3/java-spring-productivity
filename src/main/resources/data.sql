@@ -50,9 +50,17 @@ INSERT INTO userroles(roleid, userid, created_by, created_date, last_modified_by
 INSERT INTO tasks(taskid, task, completed, userid, categoryid, created_by, created_date,
                   last_modified_by,
                       last_modified_date)
-VALUES (1, 'Take out trash', false, 1, 3, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
-       (2, 'Go grocery shopping', false, 1, 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM',
+VALUES (1, 'Take out trash', FALSE, 1, 3, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+       (2, 'Go grocery shopping', FALSE, 1, 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM',
         CURRENT_TIMESTAMP),
-       (3, 'Clean bathroom', false, 1, 3, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
-       (4, 'Create Java Spring Back End', true, 2, 4, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM',
+       (3, 'Clean bathroom', FALSE, 1, 3, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+       (4, 'Create Java Spring Back End', TRUE, 2, 4, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM',
+        CURRENT_TIMESTAMP);
+
+INSERT INTO useritems(userid, itemid, quantity, checked, notes, created_by, created_date,
+                  last_modified_by,
+                  last_modified_date)
+VALUES (1, 1, 20, FALSE, NULL, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+       (2, 1, 8, FALSE, NULL, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+       (1, 3, 4, TRUE, 'Make sure its organic', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM',
         CURRENT_TIMESTAMP);
