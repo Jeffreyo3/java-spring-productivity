@@ -1,6 +1,10 @@
 package com.jeffreyorndorff.productivity.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "items")
@@ -16,6 +20,14 @@ public class Item extends Auditable {
     private float price;
 
     private String url;
+
+    /**
+     * Part of the join relationship between item and user
+     * connects items to the users combination
+     */
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "item", allowSetters = true)
+    private Set<UserItem> users = new HashSet<>();
 
     public Item() {
         // Used by JPA
@@ -57,5 +69,13 @@ public class Item extends Auditable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Set<UserItem> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<UserItem> users) {
+        this.users = users;
     }
 }

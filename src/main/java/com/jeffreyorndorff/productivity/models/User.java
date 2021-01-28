@@ -34,7 +34,15 @@ public class User extends Auditable {
      */
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "user", allowSetters = true)
-    private Set<UserRoles> roles = new HashSet<>();
+    private Set<UserRole> roles = new HashSet<>();
+
+    /**
+     * Part of the join relationship between user and item
+     * connects users to the items combination
+     */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "user", allowSetters = true)
+    private Set<UserItem> items = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "user", allowSetters = true)
@@ -100,11 +108,11 @@ public class User extends Auditable {
         this.email = email;
     }
 
-    public Set<UserRoles> getRoles() {
+    public Set<UserRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<UserRoles> roles) {
+    public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }
 
@@ -114,5 +122,13 @@ public class User extends Auditable {
 
     public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public Set<UserItem> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<UserItem> items) {
+        this.items = items;
     }
 }
