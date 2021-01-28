@@ -36,6 +36,10 @@ public class User extends Auditable {
     @JsonIgnoreProperties(value = "user", allowSetters = true)
     private Set<UserRoles> roles = new HashSet<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "user", allowSetters = true)
+    private Set<Task> tasks = new HashSet<>();
+
     public User() {
         // used by JPA
     }
@@ -102,5 +106,13 @@ public class User extends Auditable {
 
     public void setRoles(Set<UserRoles> roles) {
         this.roles = roles;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
 }
