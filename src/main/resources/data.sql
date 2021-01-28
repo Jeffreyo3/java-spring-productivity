@@ -84,3 +84,9 @@ INSERT INTO recipeitems(recipeid, itemid, quantity, measurement, created_by, cre
             CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
            (2, 3, 1, 'pound', 'SYSTEM',
             CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
+
+INSERT INTO usersubscribedrecipes(userid, recipeid, created_by, created_date, last_modified_by,
+                                  last_modified_date)
+    VALUES (1, 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (1, 2, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (2, 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);

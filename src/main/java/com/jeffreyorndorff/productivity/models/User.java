@@ -44,13 +44,21 @@ public class User extends Auditable {
     @JsonIgnoreProperties(value = "user", allowSetters = true)
     private Set<UserItem> items = new HashSet<>();
 
+    /**
+     * Part of the join relationship between user and subscribedRecipe
+     * connects users to the recipes combination
+     */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "user", allowSetters = true)
+    private Set<UserSubscribedRecipe> subscribedRecipes = new HashSet<>();
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "user", allowSetters = true)
     private Set<Task> tasks = new HashSet<>();
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "author", allowSetters = true)
-    private Set<Recipe> recipies = new HashSet<>();
+    private Set<Recipe> recipes = new HashSet<>();
 
     public User() {
         // used by JPA
@@ -136,11 +144,19 @@ public class User extends Auditable {
         this.items = items;
     }
 
-    public Set<Recipe> getRecipies() {
-        return recipies;
+    public Set<Recipe> getRecipes() {
+        return recipes;
     }
 
-    public void setRecipies(Set<Recipe> recipies) {
-        this.recipies = recipies;
+    public void setRecipes(Set<Recipe> recipies) {
+        this.recipes = recipies;
+    }
+
+    public Set<UserSubscribedRecipe> getSubscribedRecipes() {
+        return subscribedRecipes;
+    }
+
+    public void setSubscribedRecipes(Set<UserSubscribedRecipe> subscribedRecipes) {
+        this.subscribedRecipes = subscribedRecipes;
     }
 }
