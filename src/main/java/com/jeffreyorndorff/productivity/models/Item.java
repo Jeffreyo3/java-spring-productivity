@@ -19,6 +19,7 @@ public class Item extends Auditable {
     @Column(nullable = false)
     private float price;
 
+    @Column(length = 10000000)
     private String url;
 
     /**

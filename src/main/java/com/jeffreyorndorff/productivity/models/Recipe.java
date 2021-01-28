@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "recipes")
-public class Recipe {
+public class Recipe extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long recipeid;
@@ -16,7 +16,7 @@ public class Recipe {
     @Column(nullable = false)
     private String recipe;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10000000)
     private String instructions;
 
     @ManyToOne
