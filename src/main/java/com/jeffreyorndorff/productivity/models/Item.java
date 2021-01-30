@@ -32,7 +32,7 @@ public class Item extends Auditable {
 
     /**
      * Part of the join relationship between item and recipe
-     * connects items to the recipies combination
+     * connects items to the recipes combination
      */
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "item", allowSetters = true)

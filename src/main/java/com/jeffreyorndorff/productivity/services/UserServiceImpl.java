@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void delete(long id) {
-        if(userrepo.findById(id).isPresent()) {
+        if (userrepo.findById(id).isPresent()) {
             userrepo.deleteById(id);
         } else {
             throw new EntityNotFoundException("User with id " + id + " Not Found!");

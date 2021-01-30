@@ -17,7 +17,10 @@ public class UserSubscribedRecipe extends Auditable implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(name = "userid")
-    @JsonIgnoreProperties(value = "recipes", allowSetters = true)
+    @JsonIgnoreProperties(value = {"recipes", "users", "subscribedRecipes", "roles", "tasks",
+            "items",
+            "email",
+            "password"}, allowSetters = true)
     private User user;
 
     /**
@@ -27,7 +30,7 @@ public class UserSubscribedRecipe extends Auditable implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(name = "recipeid")
-    @JsonIgnoreProperties(value = "users", allowSetters = true)
+    @JsonIgnoreProperties(value = {"users", "subscribedRecipes", "recipes"}, allowSetters = true)
     private Recipe recipe;
 
     public UserSubscribedRecipe() {
