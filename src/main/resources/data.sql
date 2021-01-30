@@ -49,6 +49,7 @@ INSERT INTO users(userid, username, password, email, fname, lname, created_by, c
 INSERT INTO userroles(roleid, userid, created_by, created_date, last_modified_by,
                       last_modified_date)
     VALUES (2, 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (2, 2, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
            (1, 2, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
 
 INSERT INTO tasks(taskid, task, completed, userid, categoryid, created_by, created_date,
