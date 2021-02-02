@@ -9,9 +9,9 @@ public interface UserService {
 
     List<User> findAll();
 
-    List<User> findByUsername(String username);
+    User findByUsername(String username);
 
-//    List<User> findByNameContaining(String substring);
+    List<User> findByNameContaining(String substring);
 
     User save(User user);
 

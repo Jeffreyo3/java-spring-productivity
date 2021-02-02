@@ -6,5 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface UserRepository extends CrudRepository<User, Long> {
-    List<User> findByUsernameIgnoringCase(String username);
+    User findByUsernameIgnoringCase(String username);
+
+    List<User> findByUsernameContainingIgnoringCase(String toLowerCase);
 }

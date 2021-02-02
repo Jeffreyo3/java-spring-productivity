@@ -31,14 +31,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findByUsername(String username) {
-        return userrepo.findByUsernameIgnoringCase(username);
+    public User findByUsername(String username) {
+        User user = userrepo.findByUsernameIgnoringCase(username);
+        if(user == null) {
+            throw new EntityNotFoundException("User " + username + " Not Found");
+        }
+
+        return user;
     }
 
-//    @Override
-//    public List<User> findByNameContaining(String substring) {
-//        return null;
-//    }
+    @Override
+    public List<User> findByNameContaining(String substring) {
+        return userrepo.findByUsernameContainingIgnoringCase(substring.toLowerCase());
+    }
 
     @Override
     public User save(User user) {
