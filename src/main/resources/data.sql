@@ -91,3 +91,9 @@ INSERT INTO usersubscribedrecipes(userid, recipeid, created_by, created_date, la
     VALUES (1, 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
            (1, 2, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
            (2, 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
+
+/*
+We must tell hibernate the ids that have already been used.
+ */
+
+alter sequence hibernate_sequence restart with 10;

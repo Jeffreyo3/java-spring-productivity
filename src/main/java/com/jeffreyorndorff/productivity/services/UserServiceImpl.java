@@ -1,6 +1,6 @@
 package com.jeffreyorndorff.productivity.services;
 
-import com.jeffreyorndorff.productivity.models.User;
+import com.jeffreyorndorff.productivity.models.*;
 import com.jeffreyorndorff.productivity.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userrepo;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired ItemService itemService;
 
     @Override
     public User findUserById(long id) {
@@ -33,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         User user = userrepo.findByUsernameIgnoringCase(username);
-        if(user == null) {
+        if (user == null) {
             throw new EntityNotFoundException("User " + username + " Not Found");
         }
 
@@ -45,9 +50,45 @@ public class UserServiceImpl implements UserService {
         return userrepo.findByUsernameContainingIgnoringCase(substring.toLowerCase());
     }
 
+    @Transactional
     @Override
     public User save(User user) {
-        return null;
+        User newUser = new User();
+
+        if (user.getUserid() != 0) {
+            userrepo.findById(user.getUserid())
+                    .orElseThrow(() -> new EntityNotFoundException("User id " + user.getUserid() + " Not Found"));
+            newUser.setUserid(user.getUserid());
+        }
+
+        newUser.setUsername(user.getUsername().toLowerCase());
+        newUser.setPassword(user.getPassword());
+        newUser.setFname(user.getFname());
+        newUser.setLname(user.getLname());
+        newUser.setEmail(user.getEmail());
+
+        newUser.getRoles()
+                .clear();
+        for (UserRole ur : user.getRoles()) {
+            Role addRole = roleService.findRoleById(ur.getRole().getRoleid());
+            newUser.getRoles().add(new UserRole(newUser, addRole));
+        }
+
+        newUser.getItems()
+                .clear();
+        for (UserItem ui : user.getItems()) {
+            Item addItem = itemService.findItemById(ui.getItem().getItemid());
+            System.out.println(ui.getQuantity());
+            newUser.getItems().add(new UserItem(newUser, addItem, ui.getQuantity(), ui.getNotes()));
+        }
+
+//        newUser.getSubscribedRecipes()
+//                .clear();
+//        for(UserSubscribedRecipe usr : user.getSubscribedRecipes()) {
+//
+//        }
+
+        return userrepo.save(newUser);
     }
 
     @Override

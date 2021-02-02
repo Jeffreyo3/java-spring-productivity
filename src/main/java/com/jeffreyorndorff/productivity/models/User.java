@@ -14,7 +14,9 @@ public class User extends Auditable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userid;
 
-    @Column(nullable = false)
+    @Column(nullable = false
+//            , unique = true
+    )
     private String username;
 
     // TODO - hash and save hashed password, not user input
