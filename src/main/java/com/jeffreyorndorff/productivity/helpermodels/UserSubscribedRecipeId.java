@@ -1,4 +1,4 @@
-package com.jeffreyorndorff.productivity.models;
+package com.jeffreyorndorff.productivity.helpermodels;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;

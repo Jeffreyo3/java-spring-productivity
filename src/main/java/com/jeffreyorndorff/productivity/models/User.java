@@ -3,6 +3,7 @@ package com.jeffreyorndorff.productivity.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,6 +27,7 @@ public class User extends Auditable {
     @Column(nullable = false)
     private String lname;
 
+    @Email
     private String email;
 
     /**

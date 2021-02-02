@@ -1,6 +1,7 @@
 package com.jeffreyorndorff.productivity.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.jeffreyorndorff.productivity.helpermodels.UserRoleId;
 
 import javax.persistence.*;
 import java.io.Serializable;
