@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +20,22 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleService roleService;
 
-    @Autowired ItemService itemService;
+    @Autowired
+    private ItemService itemService;
+
+    @Autowired
+    private RecipeService recipeService;
+
+    @Autowired
+    private TaskService taskService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @Override
     public User findUserById(long id) {
-        return userrepo.findById(id).orElseThrow(() -> new EntityNotFoundException("User " + id + " Not Found"));
+        return userrepo.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("User " + id + " Not Found"));
     }
 
     @Override
@@ -55,9 +67,17 @@ public class UserServiceImpl implements UserService {
     public User save(User user) {
         User newUser = new User();
 
+        // keeps auto-generated id from incrementing even tho model has 'unique = true' constraint
+        User existingUser = userrepo.findByUsernameIgnoringCase(user.getUsername());
+        System.out.println(user.getUsername());
+        if (existingUser != null) {
+            throw new ValidationException("User " + user.getUsername() + " already exists");
+        }
+
         if (user.getUserid() != 0) {
             userrepo.findById(user.getUserid())
-                    .orElseThrow(() -> new EntityNotFoundException("User id " + user.getUserid() + " Not Found"));
+                    .orElseThrow(() ->
+                            new EntityNotFoundException("User id " + user.getUserid() + " Not Found"));
             newUser.setUserid(user.getUserid());
         }
 
@@ -74,19 +94,46 @@ public class UserServiceImpl implements UserService {
             newUser.getRoles().add(new UserRole(newUser, addRole));
         }
 
+
         newUser.getItems()
                 .clear();
         for (UserItem ui : user.getItems()) {
+            if(ui.getQuantity() <= 0) {
+                throw new ValidationException("Quantity must be greater than zero");
+            }
             Item addItem = itemService.findItemById(ui.getItem().getItemid());
-            System.out.println(ui.getQuantity());
             newUser.getItems().add(new UserItem(newUser, addItem, ui.getQuantity(), ui.getNotes()));
         }
 
-//        newUser.getSubscribedRecipes()
-//                .clear();
-//        for(UserSubscribedRecipe usr : user.getSubscribedRecipes()) {
-//
-//        }
+        newUser.getTasks()
+                .clear();
+        for(Task t : user.getTasks()) {
+            Category addCategory =
+                    categoryService.findCategoryById(t.getCategory().getCategoryid());
+            newUser.getTasks().add(new Task(newUser, t.getTask(), addCategory));
+        }
+
+        newUser.getRecipes()
+                .clear();
+        for(Recipe r : user.getRecipes()) {
+            Recipe newRecipe = new Recipe(newUser, r.getRecipe(), r.getInstructions());
+            newRecipe.getItems()
+                    .clear();
+            for(RecipeItem ri : r.getItems()) {
+                Item newItem = itemService.findItemById(ri.getItem().getItemid());
+                newRecipe.getItems().add(new RecipeItem(newRecipe, newItem, ri.getQuantity(),
+                        ri.getMeasurement()));
+            }
+
+            newUser.getRecipes().add(newRecipe);
+        }
+
+        newUser.getSubscribedRecipes()
+                .clear();
+        for(UserSubscribedRecipe usr : user.getSubscribedRecipes()) {
+            Recipe newRecipe = recipeService.findRecipeById(usr.getRecipe().getRecipeid());
+            newUser.getSubscribedRecipes().add(new UserSubscribedRecipe(newUser, newRecipe));
+        }
 
         return userrepo.save(newUser);
     }

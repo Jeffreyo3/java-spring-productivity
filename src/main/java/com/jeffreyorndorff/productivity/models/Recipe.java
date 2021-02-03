@@ -45,10 +45,10 @@ public class Recipe extends Auditable{
         // Used by JPA
     }
 
-    public Recipe(String recipe, String instructions, User author) {
+    public Recipe(User author, String recipe, String instructions) {
+        this.author = author;
         this.recipe = recipe;
         this.instructions = instructions;
-        this.author = author;
     }
 
     public long getRecipeid() {

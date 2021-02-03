@@ -14,9 +14,7 @@ public class User extends Auditable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userid;
 
-    @Column(nullable = false
-//            , unique = true
-    )
+    @Column(nullable = false, unique = true)
     private String username;
 
     // TODO - hash and save hashed password, not user input
@@ -48,14 +46,6 @@ public class User extends Auditable {
     @JsonIgnoreProperties(value = "user", allowSetters = true)
     private Set<UserItem> items = new HashSet<>();
 
-    /**
-     * Part of the join relationship between user and subscribedRecipe
-     * connects users to the recipes combination
-     */
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties(value = "user", allowSetters = true)
-    private Set<UserSubscribedRecipe> subscribedRecipes = new HashSet<>();
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "user", allowSetters = true)
     private Set<Task> tasks = new HashSet<>();
@@ -63,6 +53,14 @@ public class User extends Auditable {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "author", allowSetters = true)
     private Set<Recipe> recipes = new HashSet<>();
+
+    /**
+     * Part of the join relationship between user and subscribedRecipe
+     * connects users to the recipes combination
+     */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "user", allowSetters = true)
+    private Set<UserSubscribedRecipe> subscribedRecipes = new HashSet<>();
 
     public User() {
         // used by JPA

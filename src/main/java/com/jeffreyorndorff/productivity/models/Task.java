@@ -30,9 +30,10 @@ public class Task extends Auditable{
         // Used by JPA
     }
 
-    public Task(String task, User user) {
+    public Task(User user, String task, Category category) {
         this.task = task;
         this.user = user;
+        this.category = category;
     }
 
     public long getTaskid() {
