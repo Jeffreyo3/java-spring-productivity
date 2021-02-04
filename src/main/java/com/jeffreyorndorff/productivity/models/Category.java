@@ -17,7 +17,7 @@ public class Category extends Auditable {
     private String category;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("category")
+    @JsonIgnoreProperties(value = {"category", "user"}, allowSetters = true)
     private Set<Task> tasks = new HashSet<>();
 
 
