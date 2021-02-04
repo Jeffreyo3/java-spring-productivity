@@ -3,13 +3,14 @@ package com.jeffreyorndorff.productivity.controllers;
 import com.jeffreyorndorff.productivity.models.Category;
 import com.jeffreyorndorff.productivity.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -29,5 +30,37 @@ public class CategoryController {
         Category category = categoryService.findCategoryById(categoryId);
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
+
+    @PostMapping(value = "/category", consumes = "application/JSON")
+    public ResponseEntity<?> addNewCategory(@Valid
+                                            @RequestBody Category newCategory) {
+        newCategory.setCategoryid(0);
+        newCategory = categoryService.save(newCategory);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI newCategoryURI = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{categoryid}")
+                .buildAndExpand(newCategory.getCategoryid())
+                .toUri();
+        responseHeaders.setLocation(newCategoryURI);
+
+        return new ResponseEntity<>(newCategory,
+                responseHeaders,
+                HttpStatus.CREATED);
+    }
+
+    @PatchMapping(value = "/category/{categoryId}", consumes = "application/JSON")
+    public ResponseEntity<?> updateCategory(@RequestBody Category updateCategory,
+                                            @PathVariable long categoryId) {
+        Category updated = categoryService.update(updateCategory, categoryId);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/category/{categoryId}")
+    public ResponseEntity<?> deleteCategoryById(@PathVariable long categoryId) {
+        categoryService.delete(categoryId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }

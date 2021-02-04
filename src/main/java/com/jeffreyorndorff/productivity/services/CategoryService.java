@@ -8,4 +8,10 @@ public interface CategoryService {
     Category findCategoryById(long id);
 
     List<Category> findAll();
+
+    Category save(Category newCategory);
+
+    Category update(Category updateCategory, long categoryId);
+
+    void delete(long id);
 }

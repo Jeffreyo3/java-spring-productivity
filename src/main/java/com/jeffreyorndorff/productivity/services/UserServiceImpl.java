@@ -75,9 +75,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (user.getUserid() != 0) {
-            userrepo.findById(user.getUserid())
-                    .orElseThrow(() ->
-                            new EntityNotFoundException("User id " + user.getUserid() + " Not Found"));
+            findUserById(user.getUserid());
             newUser.setUserid(user.getUserid());
         }
 
