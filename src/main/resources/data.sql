@@ -18,11 +18,11 @@ FROM recipes;
 
 INSERT INTO categories(categoryid, category, created_by, created_date, last_modified_by,
                        last_modified_date)
-    VALUES (1, 'Shopping', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
-           (2, 'Exercise', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
-           (3, 'Cleaning', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
-           (4, 'Development', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
-           (5, 'Misc', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
+    VALUES (1, 'SHOPPING', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (2, 'EXERCISE', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (3, 'CLEANING', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (4, 'DEVELOPMENT', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (5, 'MISC', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
 
 INSERT INTO roles(roleid, role, created_by, created_date, last_modified_by,
                   last_modified_date)

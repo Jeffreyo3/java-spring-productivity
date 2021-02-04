@@ -64,10 +64,16 @@ public class UserController {
                 HttpStatus.CREATED);
     }
 
-    @PatchMapping(value = "/user/{userid}", consumes = "application/JSON")
+    @PatchMapping(value = "/user/{userId}", consumes = "application/JSON")
     public ResponseEntity<?> updateUser(@RequestBody User updateUser,
-                                        @PathVariable long userid) {
-        userService.update(updateUser, userid);
+                                        @PathVariable long userId) {
+        userService.update(updateUser, userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/user/{userId}")
+    public ResponseEntity<?> deleteUserById(@PathVariable long userId) {
+        userService.delete(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
