@@ -1,5 +1,6 @@
 package com.jeffreyorndorff.productivity.controllers;
 
+import com.jeffreyorndorff.productivity.helpermodels.CreatedUser;
 import com.jeffreyorndorff.productivity.models.User;
 import com.jeffreyorndorff.productivity.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.servlet.Servlet;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -59,6 +59,15 @@ public class UserController {
                 .toUri();
         responseHeaders.setLocation(newUserURI);
 
-        return new ResponseEntity<>(newuser.getUserid(), responseHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(new CreatedUser(newuser.getUserid(), newuser.getUsername()),
+                responseHeaders,
+                HttpStatus.CREATED);
+    }
+
+    @PatchMapping(value = "/user/{userid}", consumes = "application/JSON")
+    public ResponseEntity<?> updateUser(@RequestBody User updateUser,
+                                        @PathVariable long userid) {
+        userService.update(updateUser, userid);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

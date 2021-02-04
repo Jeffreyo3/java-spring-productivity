@@ -69,9 +69,9 @@ public class UserServiceImpl implements UserService {
 
         // keeps auto-generated id from incrementing even tho model has 'unique = true' constraint
         User existingUser = userrepo.findByUsernameIgnoringCase(user.getUsername());
-        System.out.println(user.getUsername());
+
         if (existingUser != null) {
-            throw new ValidationException("User " + user.getUsername() + " already exists");
+            throw new ValidationException("User " + user.getUsername() + " has already been taken");
         }
 
         if (user.getUserid() != 0) {
@@ -98,28 +98,32 @@ public class UserServiceImpl implements UserService {
         newUser.getItems()
                 .clear();
         for (UserItem ui : user.getItems()) {
-            if(ui.getQuantity() <= 0) {
+            if (ui.getQuantity() <= 0) {
                 throw new ValidationException("Quantity must be greater than zero");
             }
             Item addItem = itemService.findItemById(ui.getItem().getItemid());
             newUser.getItems().add(new UserItem(newUser, addItem, ui.getQuantity(), ui.getNotes()));
         }
 
+        // TODO: explore why the following code increments userid by 4 on save
         newUser.getTasks()
                 .clear();
-        for(Task t : user.getTasks()) {
+        for (Task t : user.getTasks()) {
             Category addCategory =
                     categoryService.findCategoryById(t.getCategory().getCategoryid());
             newUser.getTasks().add(new Task(newUser, t.getTask(), addCategory));
         }
+        //
 
+        // TODO: explore why the following code increments userid by 3 on save
         newUser.getRecipes()
                 .clear();
-        for(Recipe r : user.getRecipes()) {
+        for (Recipe r : user.getRecipes()) {
             Recipe newRecipe = new Recipe(newUser, r.getRecipe(), r.getInstructions());
             newRecipe.getItems()
                     .clear();
-            for(RecipeItem ri : r.getItems()) {
+
+            for (RecipeItem ri : r.getItems()) {
                 Item newItem = itemService.findItemById(ri.getItem().getItemid());
                 newRecipe.getItems().add(new RecipeItem(newRecipe, newItem, ri.getQuantity(),
                         ri.getMeasurement()));
@@ -127,10 +131,11 @@ public class UserServiceImpl implements UserService {
 
             newUser.getRecipes().add(newRecipe);
         }
+        //
 
         newUser.getSubscribedRecipes()
                 .clear();
-        for(UserSubscribedRecipe usr : user.getSubscribedRecipes()) {
+        for (UserSubscribedRecipe usr : user.getSubscribedRecipes()) {
             Recipe newRecipe = recipeService.findRecipeById(usr.getRecipe().getRecipeid());
             newUser.getSubscribedRecipes().add(new UserSubscribedRecipe(newUser, newRecipe));
         }
@@ -140,7 +145,99 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user, long id) {
-        return null;
+        User userToUpdate = findUserById(id);
+
+        if (user.getUsername() != null) {
+            User existingUser = userrepo.findByUsernameIgnoringCase(user.getUsername());
+            if (existingUser != null && existingUser.getUserid() != id) {
+                throw new ValidationException("Username " + user.getUsername() + " has already " +
+                        "been taken");
+            }
+
+            userToUpdate.setUsername(user.getUsername());
+        }
+
+        if (user.getPassword() != null) {
+            userToUpdate.setPassword(user.getPassword());
+        }
+
+        if (user.getEmail() != null) {
+            userToUpdate.setEmail(user.getEmail());
+        }
+
+        if (user.getFname() != null) {
+            userToUpdate.setFname(user.getFname());
+        }
+
+        if (user.getLname() != null) {
+            userToUpdate.setLname(user.getLname());
+        }
+
+        if (user.getRoles().size() > 0) {
+            userToUpdate.getRoles()
+                    .clear();
+            for (UserRole ur : user.getRoles()) {
+                Role addRole = roleService.findRoleById(ur.getRole().getRoleid());
+                userToUpdate.getRoles().add(new UserRole(userToUpdate, addRole));
+            }
+        }
+
+
+        if (user.getItems().size() > 0) {
+            userToUpdate.getItems()
+                    .clear();
+            for (UserItem ui : user.getItems()) {
+                if (ui.getQuantity() <= 0) {
+                    throw new ValidationException("Quantity must be greater than zero");
+                }
+                Item addItem = itemService.findItemById(ui.getItem().getItemid());
+                userToUpdate.getItems().add(new UserItem(userToUpdate, addItem, ui.getQuantity(), ui.getNotes()));
+            }
+        }
+
+        // TODO: explore why the following code increments userid by 4 on save
+        if (user.getTasks().size() > 0) {
+            userToUpdate.getTasks()
+                    .clear();
+            for (Task t : user.getTasks()) {
+                Category addCategory =
+                        categoryService.findCategoryById(t.getCategory().getCategoryid());
+                userToUpdate.getTasks().add(new Task(userToUpdate, t.getTask(), addCategory));
+            }
+        }
+        //
+
+        // TODO: explore why the following code increments userid by 3 on save
+        if (user.getRecipes().size() > 0) {
+            userToUpdate.getRecipes()
+                    .clear();
+            for (Recipe r : user.getRecipes()) {
+                Recipe newRecipe = new Recipe(userToUpdate, r.getRecipe(), r.getInstructions());
+                newRecipe.getItems()
+                        .clear();
+
+                for (RecipeItem ri : r.getItems()) {
+                    Item newItem = itemService.findItemById(ri.getItem().getItemid());
+                    newRecipe.getItems().add(new RecipeItem(newRecipe, newItem, ri.getQuantity(),
+                            ri.getMeasurement()));
+                }
+
+                userToUpdate.getRecipes().add(newRecipe);
+            }
+        }
+        //
+
+        if (user.getSubscribedRecipes().size() > 0) {
+            userToUpdate.getSubscribedRecipes()
+                    .clear();
+            for (UserSubscribedRecipe usr : user.getSubscribedRecipes()) {
+                Recipe newRecipe = recipeService.findRecipeById(usr.getRecipe().getRecipeid());
+                userToUpdate.getSubscribedRecipes().add(new UserSubscribedRecipe(userToUpdate, newRecipe));
+            }
+        }
+
+
+        return userrepo.save(userToUpdate);
     }
 
     @Transactional
