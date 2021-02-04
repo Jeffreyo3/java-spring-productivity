@@ -18,7 +18,7 @@ public class RecipeItem extends Auditable implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(name = "recipeid")
-    @JsonIgnoreProperties(value = {"items", "users"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"items", "users", "subscribedUsers"}, allowSetters = true)
     private Recipe recipe;
 
     /**
