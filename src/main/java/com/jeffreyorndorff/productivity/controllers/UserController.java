@@ -68,7 +68,7 @@ public class UserController {
     public ResponseEntity<?> updateUser(@RequestBody User updateUser,
                                         @PathVariable long userId) {
         userService.update(updateUser, userId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(value = "/user/{userId}")

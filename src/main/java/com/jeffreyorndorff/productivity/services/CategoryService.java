@@ -1,17 +1,17 @@
 package com.jeffreyorndorff.productivity.services;
 
-import com.jeffreyorndorff.productivity.models.Category;
+import com.jeffreyorndorff.productivity.models.SimpleCategory;
 
 import java.util.List;
 
 public interface CategoryService {
-    Category findCategoryById(long id);
+    SimpleCategory findCategoryById(long id);
 
-    List<Category> findAll();
+    List<SimpleCategory> findAll();
 
-    Category save(Category newCategory);
+    SimpleCategory save(SimpleCategory newCategory);
 
-    Category update(Category updateCategory, long categoryId);
+    SimpleCategory update(SimpleCategory updateCategory, long categoryId);
 
     void delete(long id);
 }

@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "categories")
-public class Category extends Auditable {
+public class SimpleCategory extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long categoryid;
@@ -21,11 +21,11 @@ public class Category extends Auditable {
     private Set<Task> tasks = new HashSet<>();
 
 
-    public Category() {
+    public SimpleCategory() {
         // Used by JPA
     }
 
-    public Category(String category) {
+    public SimpleCategory(String category) {
         this.category = category.toUpperCase();
     }
 

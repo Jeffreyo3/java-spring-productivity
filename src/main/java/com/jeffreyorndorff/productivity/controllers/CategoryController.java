@@ -1,6 +1,6 @@
 package com.jeffreyorndorff.productivity.controllers;
 
-import com.jeffreyorndorff.productivity.models.Category;
+import com.jeffreyorndorff.productivity.models.SimpleCategory;
 import com.jeffreyorndorff.productivity.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -21,19 +21,19 @@ public class CategoryController {
 
     @GetMapping(value = "/categories", produces = "application/JSON")
     public ResponseEntity<?> listAllCategories() {
-        List<Category> categoryList = categoryService.findAll();
+        List<SimpleCategory> categoryList = categoryService.findAll();
         return new ResponseEntity<>(categoryList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/category/{categoryId}", produces = "application/JSON")
     public ResponseEntity<?> getCategoryById(@PathVariable Long categoryId) {
-        Category category = categoryService.findCategoryById(categoryId);
+        SimpleCategory category = categoryService.findCategoryById(categoryId);
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     @PostMapping(value = "/category", consumes = "application/JSON")
     public ResponseEntity<?> addNewCategory(@Valid
-                                            @RequestBody Category newCategory) {
+                                            @RequestBody SimpleCategory newCategory) {
         newCategory.setCategoryid(0);
         newCategory = categoryService.save(newCategory);
 
@@ -50,10 +50,10 @@ public class CategoryController {
     }
 
     @PatchMapping(value = "/category/{categoryId}", consumes = "application/JSON")
-    public ResponseEntity<?> updateCategory(@RequestBody Category updateCategory,
+    public ResponseEntity<?> updateCategory(@RequestBody SimpleCategory updateCategory,
                                             @PathVariable long categoryId) {
-        Category updated = categoryService.update(updateCategory, categoryId);
-        return new ResponseEntity<>(updated, HttpStatus.OK);
+        SimpleCategory updated = categoryService.update(updateCategory, categoryId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(value = "/category/{categoryId}")

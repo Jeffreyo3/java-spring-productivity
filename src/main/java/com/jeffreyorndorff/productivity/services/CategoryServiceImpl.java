@@ -1,6 +1,6 @@
 package com.jeffreyorndorff.productivity.services;
 
-import com.jeffreyorndorff.productivity.models.Category;
+import com.jeffreyorndorff.productivity.models.SimpleCategory;
 import com.jeffreyorndorff.productivity.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 
     @Override
-    public Category findCategoryById(long id) {
+    public SimpleCategory findCategoryById(long id) {
         return categoryrepo.findById(id).orElseThrow(() -> new EntityNotFoundException(
                 "Category" +
                         " id" +
@@ -28,8 +28,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> findAll() {
-        List<Category> list = new ArrayList<>();
+    public List<SimpleCategory> findAll() {
+        List<SimpleCategory> list = new ArrayList<>();
 
         categoryrepo.findAll().iterator().forEachRemaining(list::add);
 
@@ -37,11 +37,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category save(Category category) {
-        Category newCategory = new Category();
+    public SimpleCategory save(SimpleCategory category) {
+        SimpleCategory newCategory = new SimpleCategory();
 
         // keep from duplicating an existing category
-        Category existingCategory = categoryrepo.findByCategoryIgnoringCase(category.getCategory());
+        SimpleCategory existingCategory = categoryrepo.findByCategoryIgnoringCase(category.getCategory());
 
         if (existingCategory != null) {
             throw new ValidationException("Category " + category.getCategory().toUpperCase() + " has " +
@@ -61,9 +61,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category update(Category category, long categoryId) {
+    public SimpleCategory update(SimpleCategory category, long categoryId) {
         if (categoryrepo.findById(categoryId).isPresent()) {
-            Category categoryToUpdate = findCategoryById(categoryId);
+            SimpleCategory categoryToUpdate = findCategoryById(categoryId);
 
             if (category.getCategory() != null) {
                 categoryToUpdate.setCategory(category.getCategory());
