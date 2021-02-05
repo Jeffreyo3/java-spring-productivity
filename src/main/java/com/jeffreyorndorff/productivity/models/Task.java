@@ -24,13 +24,13 @@ public class Task extends Auditable{
     @ManyToOne
     @JoinColumn(name = "categoryid")
     @JsonIgnoreProperties("tasks")
-    private Category category;
+    private SimpleCategory category;
 
     public Task() {
         // Used by JPA
     }
 
-    public Task(User user, String task, Category category) {
+    public Task(User user, String task, SimpleCategory category) {
         this.task = task;
         this.user = user;
         this.category = category;
@@ -68,11 +68,11 @@ public class Task extends Auditable{
         this.user = user;
     }
 
-    public Category getCategory() {
+    public SimpleCategory getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(SimpleCategory category) {
         this.category = category;
     }
 }
