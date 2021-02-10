@@ -22,4 +22,5 @@ public interface TaskService {
 
     void update(long taskId, SimpleTask updatedTask);
 
+    void delete(long taskId);
 }

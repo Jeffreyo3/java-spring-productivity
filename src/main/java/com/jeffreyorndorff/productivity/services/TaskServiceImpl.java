@@ -123,4 +123,14 @@ public class TaskServiceImpl implements TaskService{
 
         taskRepository.save(task);
     }
+
+    @Transactional
+    @Override
+    public void delete(long taskId) {
+        if(taskRepository.findById(taskId).isPresent()) {
+            taskRepository.deleteById(taskId);
+        } else {
+            throw new EntityNotFoundException("Task with id " + taskId + " Not Found!");
+        }
+    }
 }
