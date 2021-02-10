@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
         newUser.getTasks()
                 .clear();
         for (Task t : user.getTasks()) {
-            SimpleCategory addCategory =
+            Category addCategory =
                     categoryService.findCategoryById(t.getCategory().getCategoryid());
             newUser.getTasks().add(new Task(newUser, t.getTask(), addCategory));
         }
@@ -195,7 +195,7 @@ public class UserServiceImpl implements UserService {
             userToUpdate.getTasks()
                     .clear();
             for (Task t : user.getTasks()) {
-                SimpleCategory addCategory =
+                Category addCategory =
                         categoryService.findCategoryById(t.getCategory().getCategoryid());
                 userToUpdate.getTasks().add(new Task(userToUpdate, t.getTask(), addCategory));
             }

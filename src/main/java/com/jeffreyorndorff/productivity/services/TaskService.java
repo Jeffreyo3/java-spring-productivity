@@ -19,4 +19,7 @@ public interface TaskService {
     SimpleTask save(SimpleTask newTask, long userId);
 
     void toggleComplete(long taskId);
+
+    void update(long taskId, SimpleTask updatedTask);
+
 }

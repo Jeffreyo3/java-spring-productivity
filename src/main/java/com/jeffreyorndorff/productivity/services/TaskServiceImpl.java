@@ -2,7 +2,7 @@ package com.jeffreyorndorff.productivity.services;
 
 import com.jeffreyorndorff.productivity.helpermodels.SimpleTask;
 import com.jeffreyorndorff.productivity.helpermodels.SimpleTaskCategory;
-import com.jeffreyorndorff.productivity.models.SimpleCategory;
+import com.jeffreyorndorff.productivity.models.Category;
 import com.jeffreyorndorff.productivity.models.Task;
 import com.jeffreyorndorff.productivity.models.User;
 import com.jeffreyorndorff.productivity.repositories.TaskRepository;
@@ -77,11 +77,11 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public SimpleTask save(SimpleTask newTask, long userId) {
         User user = userService.findUserById(userId);
-        SimpleCategory category =
+        Category category =
                 categoryService.findCategoryByName(newTask.getCategory().getCategory());
         if(category == null) {
             category =
-                    categoryService.save(new SimpleCategory(newTask.getCategory().getCategory()));
+                    categoryService.save(new Category(newTask.getCategory().getCategory()));
         }
         Task task = taskRepository.save(new Task(user, newTask.getTask(), category));
         newTask = new SimpleTask(task.getTaskid(), task.getTask(), task.isCompleted(),
@@ -96,5 +96,31 @@ public class TaskServiceImpl implements TaskService{
         Task task = findTaskById(taskId);
 
         task.setCompleted(!task.isCompleted());
+    }
+
+    @Override
+    public void update(long taskId, SimpleTask updatedTask) {
+        Task task = findTaskById(taskId);
+
+        if(updatedTask.getTask() != null) {
+            task.setTask(updatedTask.getTask());
+        }
+
+        if(!Boolean.toString(updatedTask.isCompleted()).equals("")) {
+            task.setCompleted(updatedTask.isCompleted());
+        }
+
+        if(updatedTask.getCategory() != null) {
+            Category category =
+                    categoryService.findCategoryByName(updatedTask.getCategory().getCategory());
+            if(category == null) {
+                category =
+                        categoryService.save(new Category(updatedTask.getCategory().getCategory()));
+            }
+
+            task.setCategory(category);
+        }
+
+        taskRepository.save(task);
     }
 }

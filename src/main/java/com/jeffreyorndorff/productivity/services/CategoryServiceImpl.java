@@ -1,6 +1,6 @@
 package com.jeffreyorndorff.productivity.services;
 
-import com.jeffreyorndorff.productivity.models.SimpleCategory;
+import com.jeffreyorndorff.productivity.models.Category;
 import com.jeffreyorndorff.productivity.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 
     @Override
-    public SimpleCategory findCategoryById(long id) {
+    public Category findCategoryById(long id) {
         return categoryrepo.findById(id).orElseThrow(() -> new EntityNotFoundException(
                 "Category" +
                         " id" +
@@ -28,8 +28,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<SimpleCategory> findAll() {
-        List<SimpleCategory> list = new ArrayList<>();
+    public List<Category> findAll() {
+        List<Category> list = new ArrayList<>();
 
         categoryrepo.findAll().iterator().forEachRemaining(list::add);
 
@@ -37,16 +37,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public SimpleCategory findCategoryByName(String category) {
+    public Category findCategoryByName(String category) {
         return categoryrepo.findByCategoryIgnoringCase(category);
     }
 
     @Override
-    public SimpleCategory save(SimpleCategory category) {
-        SimpleCategory newCategory = new SimpleCategory();
+    public Category save(Category category) {
+        Category newCategory = new Category();
 
         // keep from duplicating an existing category
-        SimpleCategory existingCategory = findCategoryByName(category.getCategory());
+        Category existingCategory = findCategoryByName(category.getCategory());
 
         if (existingCategory != null) {
             throw new ValidationException("Category " + category.getCategory().toUpperCase() + " has " +
@@ -66,9 +66,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public SimpleCategory update(SimpleCategory category, long categoryId) {
+    public Category update(Category category, long categoryId) {
         if (categoryrepo.findById(categoryId).isPresent()) {
-            SimpleCategory categoryToUpdate = findCategoryById(categoryId);
+            Category categoryToUpdate = findCategoryById(categoryId);
 
             if (category.getCategory() != null) {
                 categoryToUpdate.setCategory(category.getCategory());

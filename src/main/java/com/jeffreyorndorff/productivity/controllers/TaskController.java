@@ -76,4 +76,11 @@ public class TaskController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PatchMapping(value = "/task/{taskId}")
+    public ResponseEntity<?> updateTask(@RequestBody SimpleTask task, @PathVariable long taskId) {
+        taskService.update(taskId, task);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

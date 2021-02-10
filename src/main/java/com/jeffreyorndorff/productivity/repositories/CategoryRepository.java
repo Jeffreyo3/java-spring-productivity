@@ -1,8 +1,8 @@
 package com.jeffreyorndorff.productivity.repositories;
 
-import com.jeffreyorndorff.productivity.models.SimpleCategory;
+import com.jeffreyorndorff.productivity.models.Category;
 import org.springframework.data.repository.CrudRepository;
 
-public interface CategoryRepository extends CrudRepository<SimpleCategory, Long> {
-    SimpleCategory findByCategoryIgnoringCase(String category);
+public interface CategoryRepository extends CrudRepository<Category, Long> {
+    Category findByCategoryIgnoringCase(String category);
 }
