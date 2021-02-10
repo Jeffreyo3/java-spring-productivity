@@ -28,6 +28,12 @@ public class TaskServiceImpl implements TaskService{
     private UserService userService;
 
     @Override
+    public Task findTaskById(long id) {
+        return taskRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
+                "Task" + " id" + " " + id + " Not Found"));
+    }
+
+    @Override
     public SimpleTask convertTaskToSimpleTask(Task task) {
         return new SimpleTask(
                 task.getTaskid(),
@@ -40,12 +46,8 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public SimpleTask findTaskById(long id) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
-                "Task" +
-                " id" +
-                " " + id +
-                " Not Found"));
+    public SimpleTask findSimpleTaskById(long id) {
+        Task task = findTaskById(id);
 
         return convertTaskToSimpleTask(task);
     }
@@ -87,5 +89,12 @@ public class TaskServiceImpl implements TaskService{
                         task.getCategory().getCategory()));
 
         return newTask;
+    }
+
+    @Override
+    public void toggleComplete(long taskId) {
+        Task task = findTaskById(taskId);
+
+        task.setCompleted(!task.isCompleted());
     }
 }

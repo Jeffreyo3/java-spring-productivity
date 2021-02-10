@@ -6,7 +6,9 @@ import com.jeffreyorndorff.productivity.models.Task;
 import java.util.List;
 
 public interface TaskService {
-    SimpleTask findTaskById(long id);
+    Task findTaskById(long id);
+
+    SimpleTask findSimpleTaskById(long id);
 
     List<SimpleTask> findAll();
 
@@ -15,4 +17,6 @@ public interface TaskService {
     SimpleTask convertTaskToSimpleTask(Task task);
 
     SimpleTask save(SimpleTask newTask, long userId);
+
+    void toggleComplete(long taskId);
 }

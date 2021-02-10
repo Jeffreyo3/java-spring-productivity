@@ -33,7 +33,7 @@ public class TaskController {
     */
     @GetMapping(value = "/task/{taskId}", produces = "application/JSON")
     public ResponseEntity<?> getTaskById(@PathVariable long taskId) {
-        SimpleTask task = taskService.findTaskById(taskId);
+        SimpleTask task = taskService.findSimpleTaskById(taskId);
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
 
@@ -68,5 +68,12 @@ public class TaskController {
         return new ResponseEntity<>(newTask,
                 responseHeaders,
                 HttpStatus.CREATED);
+    }
+
+    @PatchMapping(value = "/task/{taskId}/toggle")
+    public ResponseEntity<?> toggleComplete(@PathVariable long taskId) {
+        taskService.toggleComplete(taskId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
