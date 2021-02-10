@@ -11,7 +11,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User extends Auditable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userid;
 
     @Column(nullable = false, unique = true)

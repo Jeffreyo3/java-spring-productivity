@@ -65,6 +65,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public User save(User user) {
+
         User newUser = new User();
 
         // keeps auto-generated id from incrementing even tho model has 'unique = true' constraint
@@ -103,7 +104,6 @@ public class UserServiceImpl implements UserService {
             newUser.getItems().add(new UserItem(newUser, addItem, ui.getQuantity(), ui.getNotes()));
         }
 
-        // TODO: explore why the following code increments userid by 4 on save
         newUser.getTasks()
                 .clear();
         for (Task t : user.getTasks()) {
@@ -111,9 +111,7 @@ public class UserServiceImpl implements UserService {
                     categoryService.findCategoryById(t.getCategory().getCategoryid());
             newUser.getTasks().add(new Task(newUser, t.getTask(), addCategory));
         }
-        //
 
-        // TODO: explore why the following code increments userid by 3 on save
         newUser.getRecipes()
                 .clear();
         for (Recipe r : user.getRecipes()) {
@@ -129,7 +127,6 @@ public class UserServiceImpl implements UserService {
 
             newUser.getRecipes().add(newRecipe);
         }
-        //
 
         newUser.getSubscribedRecipes()
                 .clear();
