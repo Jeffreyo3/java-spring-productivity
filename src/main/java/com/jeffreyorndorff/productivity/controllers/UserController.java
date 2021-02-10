@@ -64,6 +64,7 @@ public class UserController {
                 HttpStatus.CREATED);
     }
 
+    // TODO: Refactor once Security is implemented to grab userId from SecurityContext
     @PatchMapping(value = "/user/{userId}", consumes = "application/JSON")
     public ResponseEntity<?> updateUser(@RequestBody User updateUser,
                                         @PathVariable long userId) {
@@ -71,6 +72,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    // TODO: Refactor once Security is implemented to grab userId from SecurityContext
     @DeleteMapping(value = "/user/{userId}")
     public ResponseEntity<?> deleteUserById(@PathVariable long userId) {
         userService.delete(userId);

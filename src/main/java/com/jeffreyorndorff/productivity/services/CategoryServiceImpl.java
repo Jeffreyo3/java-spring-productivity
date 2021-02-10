@@ -37,11 +37,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public SimpleCategory findCategoryByName(String category) {
+        return categoryrepo.findByCategoryIgnoringCase(category);
+    }
+
+    @Override
     public SimpleCategory save(SimpleCategory category) {
         SimpleCategory newCategory = new SimpleCategory();
 
         // keep from duplicating an existing category
-        SimpleCategory existingCategory = categoryrepo.findByCategoryIgnoringCase(category.getCategory());
+        SimpleCategory existingCategory = findCategoryByName(category.getCategory());
 
         if (existingCategory != null) {
             throw new ValidationException("Category " + category.getCategory().toUpperCase() + " has " +

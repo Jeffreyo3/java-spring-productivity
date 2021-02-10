@@ -14,4 +14,6 @@ public interface CategoryService {
     SimpleCategory update(SimpleCategory updateCategory, long categoryId);
 
     void delete(long id);
+
+    SimpleCategory findCategoryByName(String category);
 }

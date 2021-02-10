@@ -13,4 +13,6 @@ public interface TaskService {
     List<SimpleTask> findByUserId(long userId);
 
     SimpleTask convertTaskToSimpleTask(Task task);
+
+    SimpleTask save(SimpleTask newTask, long userId);
 }
