@@ -27,9 +27,6 @@ public class UserServiceImpl implements UserService {
     private RecipeService recipeService;
 
     @Autowired
-    private TaskService taskService;
-
-    @Autowired
     private CategoryService categoryService;
 
     @Override

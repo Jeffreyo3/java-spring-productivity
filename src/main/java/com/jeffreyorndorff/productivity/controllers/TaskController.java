@@ -70,6 +70,9 @@ public class TaskController {
                 HttpStatus.CREATED);
     }
 
+    /*
+     * Toggle completed boolean given task id
+     */
     @PatchMapping(value = "/task/{taskId}/toggle")
     public ResponseEntity<?> toggleComplete(@PathVariable long taskId) {
         taskService.toggleComplete(taskId);
@@ -77,6 +80,9 @@ public class TaskController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    /*
+     * Update a single task by its id
+     */
     @PatchMapping(value = "/task/{taskId}")
     public ResponseEntity<?> updateTask(@RequestBody SimpleTask task, @PathVariable long taskId) {
         taskService.update(taskId, task);
@@ -84,6 +90,9 @@ public class TaskController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    /*
+     * Delete a single task by its id
+     */
     @DeleteMapping(value = "/task/{taskId}")
     public ResponseEntity<?> deleteTask(@PathVariable long taskId) {
         taskService.delete(taskId);
