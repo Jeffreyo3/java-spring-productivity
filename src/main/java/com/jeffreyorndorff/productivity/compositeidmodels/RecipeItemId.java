@@ -1,24 +1,19 @@
-package com.jeffreyorndorff.productivity.helpermodels;
+package com.jeffreyorndorff.productivity.compositeidmodels;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
+/**
+ * Class to represent the complex primary key for RecipeItem
+ */
 @Embeddable
-public class UserSubscribedRecipeId implements Serializable {
+public class RecipeItemId implements Serializable {
 
-    private long user;
     private long recipe;
+    private long item;
 
-    public UserSubscribedRecipeId() {
+    public RecipeItemId() {
         // Used by JPA
-    }
-
-    public long getUser() {
-        return user;
-    }
-
-    public void setUser(long user) {
-        this.user = user;
     }
 
     public long getRecipe() {
@@ -29,12 +24,20 @@ public class UserSubscribedRecipeId implements Serializable {
         this.recipe = recipe;
     }
 
+    public long getItem() {
+        return item;
+    }
+
+    public void setItem(long item) {
+        this.item = item;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserSubscribedRecipeId that = (UserSubscribedRecipeId) o;
-        return user == that.user && recipe == that.recipe;
+        RecipeItemId that = (RecipeItemId) o;
+        return recipe == that.recipe && item == that.item;
     }
 
     @Override
