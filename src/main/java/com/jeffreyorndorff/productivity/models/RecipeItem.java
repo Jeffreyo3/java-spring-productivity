@@ -1,7 +1,7 @@
 package com.jeffreyorndorff.productivity.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.jeffreyorndorff.productivity.helpermodels.RecipeItemId;
+import com.jeffreyorndorff.productivity.compositeidmodels.RecipeItemId;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -187,7 +187,6 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        // TODO: explore why the following code increments userid by 4 on save
         if (user.getTasks().size() > 0) {
             userToUpdate.getTasks()
                     .clear();
@@ -197,9 +196,7 @@ public class UserServiceImpl implements UserService {
                 userToUpdate.getTasks().add(new Task(userToUpdate, t.getTask(), addCategory));
             }
         }
-        //
 
-        // TODO: explore why the following code increments userid by 3 on save
         if (user.getRecipes().size() > 0) {
             userToUpdate.getRecipes()
                     .clear();
@@ -217,7 +214,6 @@ public class UserServiceImpl implements UserService {
                 userToUpdate.getRecipes().add(newRecipe);
             }
         }
-        //
 
         if (user.getSubscribedRecipes().size() > 0) {
             userToUpdate.getSubscribedRecipes()
