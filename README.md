@@ -55,6 +55,10 @@
     - User should be able to populate a shopping list from a recipe cart using all the 
       associated Items
     - User will be suggested a quantity, but will be able to edit the quantity.
+    
+- Implement Security (OAuth2 or Okta)
+- Implement Custom Error Handling
+- Add Swagger Documentation
 
 ## Stretch
 - Add a moderator role that admins can grant users to remove or edit flagged inappropriate content
