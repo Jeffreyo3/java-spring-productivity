@@ -1,6 +1,5 @@
 package com.jeffreyorndorff.productivity.services;
 
-import com.jeffreyorndorff.productivity.helpermodels.SimpleItem;
 import com.jeffreyorndorff.productivity.helpermodels.SimpleItemWithRecipes;
 import com.jeffreyorndorff.productivity.models.Item;
 

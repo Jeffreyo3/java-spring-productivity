@@ -1,9 +1,9 @@
 package com.jeffreyorndorff.productivity.controllers;
 
-import com.jeffreyorndorff.productivity.helpermodels.SimpleItem;
 import com.jeffreyorndorff.productivity.helpermodels.SimpleItemWithRecipes;
 import com.jeffreyorndorff.productivity.helpermodels.SimpleUserItem;
 import com.jeffreyorndorff.productivity.models.Item;
+import com.jeffreyorndorff.productivity.models.UserItem;
 import com.jeffreyorndorff.productivity.services.ItemService;
 import com.jeffreyorndorff.productivity.services.UserItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +51,16 @@ public class ItemController {
     public ResponseEntity<?> getItemsByUserId(@PathVariable long userId) {
         List<SimpleUserItem> itemList = userItemService.findAllItemsByUserid(userId);
         return new ResponseEntity<>(itemList, HttpStatus.OK);
+    }
+
+    /*
+    * Create new User to Item relationship
+    */
+    @PostMapping(value = "/user/{userId}", produces = "application/JSON", consumes = "application/JSON")
+    public ResponseEntity<?> addUserItem(@PathVariable long userId,
+                                         @Valid @RequestBody SimpleUserItem userItem) {
+        SimpleUserItem newUserItem = userItemService.save(userItem, userId);
+        return new ResponseEntity<>(newUserItem, HttpStatus.OK);
     }
 
     /*

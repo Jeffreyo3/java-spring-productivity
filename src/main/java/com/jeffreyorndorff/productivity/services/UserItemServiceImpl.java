@@ -2,6 +2,7 @@ package com.jeffreyorndorff.productivity.services;
 
 import com.jeffreyorndorff.productivity.helpermodels.SimpleItem;
 import com.jeffreyorndorff.productivity.helpermodels.SimpleUserItem;
+import com.jeffreyorndorff.productivity.models.Item;
 import com.jeffreyorndorff.productivity.models.User;
 import com.jeffreyorndorff.productivity.models.UserItem;
 import com.jeffreyorndorff.productivity.repositories.UserItemRepository;
@@ -17,6 +18,9 @@ import java.util.List;
 public class UserItemServiceImpl implements UserItemService {
     @Autowired
     private UserItemRepository useritemrepo;
+
+    @Autowired
+    private ItemService itemService;
 
     @Autowired
     private UserService userService;
@@ -47,5 +51,27 @@ public class UserItemServiceImpl implements UserItemService {
                 list.add(convertUserItemToSimpleUserItem(listItem)));
 
         return list;
+    }
+
+
+    @Override
+    public SimpleUserItem save(SimpleUserItem userItem, long userId) {
+        Item item = itemService.findItemById(userItem.getItem().getItemid());
+
+        User user = userService.findUserById(userId);
+
+        UserItem newUserItem = new UserItem(user, item, userItem.getQuantity(), userItem.getNotes());
+
+        newUserItem = useritemrepo.save(newUserItem);
+
+        return new SimpleUserItem(
+                new SimpleItem(newUserItem.getItem().getItemid(),
+                        newUserItem.getItem().getItem(),
+                        newUserItem.getItem().getPrice(),
+                        newUserItem.getItem().getUrl()),
+                newUserItem.getQuantity(),
+                newUserItem.isChecked(),
+                newUserItem.getNotes()
+        );
     }
 }

@@ -1,7 +1,5 @@
 package com.jeffreyorndorff.productivity.services;
 
-import com.jeffreyorndorff.productivity.helpermodels.SimpleItem;
-import com.jeffreyorndorff.productivity.helpermodels.SimpleItemWithRecipes;
 import com.jeffreyorndorff.productivity.helpermodels.SimpleUserItem;
 import com.jeffreyorndorff.productivity.models.UserItem;
 
@@ -11,4 +9,6 @@ public interface UserItemService {
     List<SimpleUserItem> findAllItemsByUserid(long userId);
 
     SimpleUserItem convertUserItemToSimpleUserItem(UserItem userItem);
+
+    SimpleUserItem save(SimpleUserItem userItem, long userId);
 }

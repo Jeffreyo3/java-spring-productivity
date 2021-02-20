@@ -1,13 +1,11 @@
 package com.jeffreyorndorff.productivity.services;
 
-import com.jeffreyorndorff.productivity.helpermodels.SimpleItem;
 import com.jeffreyorndorff.productivity.helpermodels.SimpleItemRecipe;
 import com.jeffreyorndorff.productivity.helpermodels.SimpleItemWithRecipes;
 import com.jeffreyorndorff.productivity.models.Item;
 import com.jeffreyorndorff.productivity.models.RecipeItem;
 import com.jeffreyorndorff.productivity.models.UserItem;
 import com.jeffreyorndorff.productivity.repositories.ItemRepository;
-import com.jeffreyorndorff.productivity.repositories.UserItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +21,6 @@ import java.util.Set;
 public class ItemServiceImpl implements ItemService{
     @Autowired
     private ItemRepository itemrepo;
-
-    @Autowired
-    private UserItemRepository useritemrepo;
 
     @Override
     public Item findItemById(long id) {
