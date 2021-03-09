@@ -101,13 +101,14 @@ public class UserItemServiceImpl implements UserItemService {
 
         updatedUserItem.setItem(item);
         updatedUserItem.setUser(user);
-        updatedUserItem.setQuantity(userItem.getQuantity());
-        updatedUserItem.setChecked(userItem.isChecked());
-
-
-        if(userItem.getNotes() != null) {
-            updatedUserItem.setNotes(userItem.getNotes());
+        if(userItem.getQuantity() >= 1) {
+            updatedUserItem.setQuantity(userItem.getQuantity());
+        } else {
+            updatedUserItem.setQuantity(uiList.get(0).getQuantity());
         }
+        updatedUserItem.setChecked(userItem.isChecked());
+        updatedUserItem.setNotes(userItem.getNotes());
+
 
         useritemrepo.save(updatedUserItem);
     }

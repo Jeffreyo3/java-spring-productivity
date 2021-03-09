@@ -109,7 +109,7 @@ public class ItemController {
     /*
      * Update UserItem
      */
-    @PatchMapping(value = "/user/{userId}", consumes = "application/JSON")
+    @PutMapping(value = "/user/{userId}", consumes = "application/JSON")
     public ResponseEntity<?> updateUserItem(@PathVariable long userId,
                                             @Valid @RequestBody SimpleUserItem userItem) {
         userItemService.update(userItem, userId);
