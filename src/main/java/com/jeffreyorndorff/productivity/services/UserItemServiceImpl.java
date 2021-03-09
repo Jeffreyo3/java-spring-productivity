@@ -54,6 +54,31 @@ public class UserItemServiceImpl implements UserItemService {
         return list;
     }
 
+    @Override
+    public UserItem findByUseridAndItemid(long userId, long itemId) {
+        // validate that item exists
+        Item item = itemService.findItemById(itemId);
+        // validate that user exists
+        User user = userService.findUserById(userId);
+
+        /*
+         * JPA query gives back a list, but since we're querying by
+         * unique values, the list size should be 1 if it exists,
+         * zero otherwise
+         */
+        List<UserItem> uiList = useritemrepo.findByUser_UseridAndItem_Itemid(
+                user.getUserid(), item.getItemid()
+        );
+
+        if(uiList.size() == 0) {
+            throw new EntityNotFoundException("Connection between User with id " + userId + " and" +
+                    " " +
+                    "Item " +
+                    "with id " + itemId + " Not found");
+        }
+
+        return uiList.get(0);
+    }
 
     @Override
     public SimpleUserItem save(SimpleUserItem userItem, long userId) {
@@ -78,38 +103,31 @@ public class UserItemServiceImpl implements UserItemService {
 
     @Override
     public void update(SimpleUserItem userItem, long userId) {
-        // validate that item exists
-        Item item = itemService.findItemById(userItem.getItem().getItemid());
-        // validate that user exists
-        User user = userService.findUserById(userId);
-
-        /*
-        * JPA query gives back a list, but since we're querying by
-        * unique values, the list size should be 1 if it exists,
-        * zero otherwise
-        */
-        List<UserItem> uiList = useritemrepo.findByUser_UseridAndItem_Itemid(
-                user.getUserid(), item.getItemid()
-        );
-
-        if(uiList.size() == 0) {
-            throw new EntityNotFoundException("Item id " + userItem.getItem().getItemid() + " Not" +
-                    " Found on user " + userId);
-        }
+        UserItem ui = findByUseridAndItemid(userId, userItem.getItem().getItemid());
 
         UserItem updatedUserItem = new UserItem();
 
-        updatedUserItem.setItem(item);
-        updatedUserItem.setUser(user);
+        updatedUserItem.setItem(ui.getItem());
+        updatedUserItem.setUser(ui.getUser());
         if(userItem.getQuantity() >= 1) {
             updatedUserItem.setQuantity(userItem.getQuantity());
         } else {
-            updatedUserItem.setQuantity(uiList.get(0).getQuantity());
+            updatedUserItem.setQuantity(ui.getQuantity());
         }
         updatedUserItem.setChecked(userItem.isChecked());
         updatedUserItem.setNotes(userItem.getNotes());
 
 
         useritemrepo.save(updatedUserItem);
+    }
+
+    @Transactional
+    @Override
+    public void delete(long userId, long itemId) {
+        UserItem ui = findByUseridAndItemid(userId, itemId);
+
+        if(ui != null) {
+            useritemrepo.deleteByUser_UseridAndItem_Itemid(userId, itemId);
+        }
     }
 }

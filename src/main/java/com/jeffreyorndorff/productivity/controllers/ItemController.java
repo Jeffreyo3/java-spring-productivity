@@ -115,4 +115,15 @@ public class ItemController {
         userItemService.update(userItem, userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    // TODO: Refactor once Security is implemented to grab userId from SecurityContext
+    /*
+    * Remove UserItem
+    */
+    @DeleteMapping(value = "/user/{userId}/item/{itemId}")
+    public ResponseEntity<?> deleteUserItem(@PathVariable long userId,
+                                            @PathVariable long itemId) {
+        userItemService.delete(userId, itemId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

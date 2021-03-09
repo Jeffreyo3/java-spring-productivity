@@ -10,4 +10,6 @@ public interface UserItemRepository extends CrudRepository<UserItem, Long> {
     List<UserItem> findAllByUser(User user);
 
     List<UserItem> findByUser_UseridAndItem_Itemid(long userid, long itemid);
+
+    void deleteByUser_UseridAndItem_Itemid(long userid, long itemid);
 }
