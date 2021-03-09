@@ -3,7 +3,6 @@ package com.jeffreyorndorff.productivity.controllers;
 import com.jeffreyorndorff.productivity.helpermodels.SimpleItemWithRecipes;
 import com.jeffreyorndorff.productivity.helpermodels.SimpleUserItem;
 import com.jeffreyorndorff.productivity.models.Item;
-import com.jeffreyorndorff.productivity.models.UserItem;
 import com.jeffreyorndorff.productivity.services.ItemService;
 import com.jeffreyorndorff.productivity.services.UserItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,25 +44,6 @@ public class ItemController {
     }
 
     /*
-    * Get all items by userid
-    */
-    @GetMapping(value = "/user/{userId}", produces = "application/JSON")
-    public ResponseEntity<?> getItemsByUserId(@PathVariable long userId) {
-        List<SimpleUserItem> itemList = userItemService.findAllItemsByUserid(userId);
-        return new ResponseEntity<>(itemList, HttpStatus.OK);
-    }
-
-    /*
-    * Create new User to Item relationship
-    */
-    @PostMapping(value = "/user/{userId}", produces = "application/JSON", consumes = "application/JSON")
-    public ResponseEntity<?> addUserItem(@PathVariable long userId,
-                                         @Valid @RequestBody SimpleUserItem userItem) {
-        SimpleUserItem newUserItem = userItemService.save(userItem, userId);
-        return new ResponseEntity<>(newUserItem, HttpStatus.OK);
-    }
-
-    /*
     * Create new item
     */
     @PostMapping(value = "/item", consumes = "application/JSON", produces = "application/JSON")
@@ -93,12 +73,46 @@ public class ItemController {
         return new ResponseEntity<>(item, HttpStatus.NO_CONTENT);
     }
 
+    // TODO: Refactor once Security is implemented - only Admin should be able to use this endpoint
     /*
     * Delete item by id
     */
     @DeleteMapping(value = "/item/{itemId}", produces = "application/JSON")
     public ResponseEntity<?> deleteItemById(@PathVariable long itemId) {
         itemService.delete(itemId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // TODO: Refactor once Security is implemented to grab userId from SecurityContext
+    /*
+     * Get all items by userid
+     */
+    @GetMapping(value = "/user/{userId}", produces = "application/JSON")
+    public ResponseEntity<?> getItemsByUserId(@PathVariable long userId) {
+        List<SimpleUserItem> itemList = userItemService.findAllItemsByUserid(userId);
+        return new ResponseEntity<>(itemList, HttpStatus.OK);
+    }
+
+
+    // TODO: Refactor once Security is implemented to grab userId from SecurityContext
+    /*
+     * Create new User to Item relationship
+     */
+    @PostMapping(value = "/user/{userId}", produces = "application/JSON", consumes = "application/JSON")
+    public ResponseEntity<?> addUserItem(@PathVariable long userId,
+                                         @Valid @RequestBody SimpleUserItem userItem) {
+        SimpleUserItem newUserItem = userItemService.save(userItem, userId);
+        return new ResponseEntity<>(newUserItem, HttpStatus.OK);
+    }
+
+    // TODO: Refactor once Security is implemented to grab userId from SecurityContext
+    /*
+     * Update UserItem
+     */
+    @PatchMapping(value = "/user/{userId}", consumes = "application/JSON")
+    public ResponseEntity<?> updateUserItem(@PathVariable long userId,
+                                            @Valid @RequestBody SimpleUserItem userItem) {
+        userItemService.update(userItem, userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

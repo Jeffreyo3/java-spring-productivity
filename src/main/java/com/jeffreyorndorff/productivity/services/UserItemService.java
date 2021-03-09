@@ -11,4 +11,6 @@ public interface UserItemService {
     SimpleUserItem convertUserItemToSimpleUserItem(UserItem userItem);
 
     SimpleUserItem save(SimpleUserItem userItem, long userId);
+
+    void update(SimpleUserItem userItem, long userId);
 }

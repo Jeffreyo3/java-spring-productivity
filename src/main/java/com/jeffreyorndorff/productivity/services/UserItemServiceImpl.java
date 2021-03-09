@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,5 +74,41 @@ public class UserItemServiceImpl implements UserItemService {
                 newUserItem.isChecked(),
                 newUserItem.getNotes()
         );
+    }
+
+    @Override
+    public void update(SimpleUserItem userItem, long userId) {
+        // validate that item exists
+        Item item = itemService.findItemById(userItem.getItem().getItemid());
+        // validate that user exists
+        User user = userService.findUserById(userId);
+
+        /*
+        * JPA query gives back a list, but since we're querying by
+        * unique values, the list size should be 1 if it exists,
+        * zero otherwise
+        */
+        List<UserItem> uiList = useritemrepo.findByUser_UseridAndItem_Itemid(
+                user.getUserid(), item.getItemid()
+        );
+
+        if(uiList.size() == 0) {
+            throw new EntityNotFoundException("Item id " + userItem.getItem().getItemid() + " Not" +
+                    " Found on user " + userId);
+        }
+
+        UserItem updatedUserItem = new UserItem();
+
+        updatedUserItem.setItem(item);
+        updatedUserItem.setUser(user);
+        updatedUserItem.setQuantity(userItem.getQuantity());
+        updatedUserItem.setChecked(userItem.isChecked());
+
+
+        if(userItem.getNotes() != null) {
+            updatedUserItem.setNotes(userItem.getNotes());
+        }
+
+        useritemrepo.save(updatedUserItem);
     }
 }

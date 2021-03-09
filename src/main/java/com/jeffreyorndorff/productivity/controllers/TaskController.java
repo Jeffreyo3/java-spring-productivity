@@ -70,6 +70,7 @@ public class TaskController {
                 HttpStatus.CREATED);
     }
 
+    // TODO: Refactor once Security is implemented to validate user access from SecurityContext
     /*
      * Toggle completed boolean given task id
      */
@@ -80,6 +81,7 @@ public class TaskController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    // TODO: Refactor once Security is implemented to validate user access from SecurityContext
     /*
      * Update a single task by its id
      */
@@ -90,6 +92,7 @@ public class TaskController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    // TODO: Refactor once Security is implemented to validate user access from SecurityContext
     /*
      * Delete a single task by its id
      */
