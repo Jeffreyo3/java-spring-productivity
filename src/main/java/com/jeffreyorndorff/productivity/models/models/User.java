@@ -1,4 +1,4 @@
-package com.jeffreyorndorff.productivity.models;
+package com.jeffreyorndorff.productivity.models.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

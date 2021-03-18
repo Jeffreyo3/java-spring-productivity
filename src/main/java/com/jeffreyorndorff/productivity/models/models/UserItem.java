@@ -1,7 +1,7 @@
-package com.jeffreyorndorff.productivity.models;
+package com.jeffreyorndorff.productivity.models.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.jeffreyorndorff.productivity.compositeidmodels.UserItemId;
+import com.jeffreyorndorff.productivity.models.compositeidmodels.UserItemId;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,6 +1,6 @@
 package com.jeffreyorndorff.productivity.services;
 
-import com.jeffreyorndorff.productivity.models.Recipe;
+import com.jeffreyorndorff.productivity.models.models.Recipe;
 import com.jeffreyorndorff.productivity.repositories.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

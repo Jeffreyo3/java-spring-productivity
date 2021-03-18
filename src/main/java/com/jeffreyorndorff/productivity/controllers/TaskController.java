@@ -1,6 +1,6 @@
 package com.jeffreyorndorff.productivity.controllers;
 
-import com.jeffreyorndorff.productivity.helpermodels.SimpleTask;
+import com.jeffreyorndorff.productivity.models.helpermodels.SimpleTask;
 import com.jeffreyorndorff.productivity.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

@@ -1,6 +1,6 @@
 package com.jeffreyorndorff.productivity.services;
 
-import com.jeffreyorndorff.productivity.models.Category;
+import com.jeffreyorndorff.productivity.models.models.Category;
 import com.jeffreyorndorff.productivity.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.jeffreyorndorff.productivity.helpermodels;
+package com.jeffreyorndorff.productivity.models.helpermodels;
 
 import java.util.Set;
 

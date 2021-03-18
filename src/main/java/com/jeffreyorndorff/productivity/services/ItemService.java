@@ -1,7 +1,7 @@
 package com.jeffreyorndorff.productivity.services;
 
-import com.jeffreyorndorff.productivity.helpermodels.SimpleItemWithRecipes;
-import com.jeffreyorndorff.productivity.models.Item;
+import com.jeffreyorndorff.productivity.models.helpermodels.SimpleItemWithRecipes;
+import com.jeffreyorndorff.productivity.models.models.Item;
 
 import java.util.List;
 

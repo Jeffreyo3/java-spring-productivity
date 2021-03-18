@@ -1,6 +1,6 @@
 package com.jeffreyorndorff.productivity.services;
 
-import com.jeffreyorndorff.productivity.models.Role;
+import com.jeffreyorndorff.productivity.models.models.Role;
 import com.jeffreyorndorff.productivity.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

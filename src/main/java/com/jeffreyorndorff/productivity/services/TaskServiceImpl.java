@@ -1,10 +1,10 @@
 package com.jeffreyorndorff.productivity.services;
 
-import com.jeffreyorndorff.productivity.helpermodels.SimpleTask;
-import com.jeffreyorndorff.productivity.helpermodels.SimpleTaskCategory;
-import com.jeffreyorndorff.productivity.models.Category;
-import com.jeffreyorndorff.productivity.models.Task;
-import com.jeffreyorndorff.productivity.models.User;
+import com.jeffreyorndorff.productivity.models.helpermodels.SimpleTask;
+import com.jeffreyorndorff.productivity.models.helpermodels.SimpleTaskCategory;
+import com.jeffreyorndorff.productivity.models.models.Category;
+import com.jeffreyorndorff.productivity.models.models.Task;
+import com.jeffreyorndorff.productivity.models.models.User;
 import com.jeffreyorndorff.productivity.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

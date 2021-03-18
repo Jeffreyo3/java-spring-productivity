@@ -1,15 +1,18 @@
-package com.jeffreyorndorff.productivity.compositeidmodels;
+package com.jeffreyorndorff.productivity.models.compositeidmodels;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
+/**
+ * Class to represent the complex primary key for UserRole
+ */
 @Embeddable
-public class UserSubscribedRecipeId implements Serializable {
+public class UserRoleId implements Serializable {
 
     private long user;
-    private long recipe;
+    private long role;
 
-    public UserSubscribedRecipeId() {
+    public UserRoleId() {
         // Used by JPA
     }
 
@@ -21,20 +24,20 @@ public class UserSubscribedRecipeId implements Serializable {
         this.user = user;
     }
 
-    public long getRecipe() {
-        return recipe;
+    public long getRole() {
+        return role;
     }
 
-    public void setRecipe(long recipe) {
-        this.recipe = recipe;
+    public void setRole(long role) {
+        this.role = role;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserSubscribedRecipeId that = (UserSubscribedRecipeId) o;
-        return user == that.user && recipe == that.recipe;
+        UserRoleId that = (UserRoleId) o;
+        return user == that.user && role == that.role;
     }
 
     @Override

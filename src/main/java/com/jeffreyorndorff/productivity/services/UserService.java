@@ -1,6 +1,6 @@
 package com.jeffreyorndorff.productivity.services;
 
-import com.jeffreyorndorff.productivity.models.User;
+import com.jeffreyorndorff.productivity.models.models.User;
 
 import java.util.List;
 
