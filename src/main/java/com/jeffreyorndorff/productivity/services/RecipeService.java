@@ -14,5 +14,9 @@ public interface RecipeService {
 
     SimpleRecipe convertToSimpleRecipe(Recipe recipe);
 
-    void save(Recipe recipe, long authorId);
+    Recipe save(Recipe recipe, long authorId);
+
+    void update(Recipe recipe, long authorId) throws IllegalAccessException;
+
+    void delete(long recipeId, long authorId) throws IllegalAccessException;
 }

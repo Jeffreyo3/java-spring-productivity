@@ -89,7 +89,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public void save(Recipe recipe, long authorId) {
+    public Recipe save(Recipe recipe, long authorId) {
         User author = userService.findUserById(authorId);
 
         Recipe newRecipe = new Recipe();
@@ -117,6 +117,52 @@ public class RecipeServiceImpl implements RecipeService {
                 new UserSubscribedRecipe(author, newRecipe)
         );
 
-        reciperepo.save(newRecipe);
+        return reciperepo.save(newRecipe);
+    }
+
+    @Override
+    public void update(Recipe recipe, long authorId) throws IllegalAccessException {
+        User author = userService.findUserById(authorId);
+        Recipe recipeToUpdate = findRecipeById(recipe.getRecipeid());
+
+        if (author.getUserid() != recipeToUpdate.getAuthor().getUserid()) {
+            throw new IllegalAccessException("User " + authorId + " is unauthorized to make changes to recipe with id " + recipe.getRecipeid());
+        }
+
+        recipe.setAuthor(author);
+        if (recipe.getRecipe() != null) {
+            recipeToUpdate.setRecipe(recipe.getRecipe());
+        }
+        if (recipe.getInstructions() != null) {
+            recipeToUpdate.setInstructions(recipe.getInstructions());
+        }
+        if (recipe.getItems().size() > 0) {
+            recipeToUpdate.getItems().clear();
+            for (RecipeItem ri : recipe.getItems()) {
+                Item item = itemService.findItemById(ri.getItem().getItemid());
+                RecipeItem recipeItem = new RecipeItem(
+                        recipeToUpdate,
+                        item,
+                        ri.getQuantity(),
+                        ri.getMeasurement()
+                );
+                recipeToUpdate.getItems().add(recipeItem);
+            }
+        }
+
+        // recipeToUpdate.get/setSubscribedUsers() not included b/c
+        // author should not be able to change subscribers
+        reciperepo.save(recipeToUpdate);
+    }
+
+    @Transactional
+    @Override
+    public void delete(long recipeId, long authorId) throws IllegalAccessException {
+        Recipe toDelete = findRecipeById(recipeId);
+        if (toDelete.getAuthor().getUserid() == authorId ) {
+            reciperepo.deleteById(toDelete.getRecipeid());
+        } else {
+            throw new IllegalAccessException("User " + authorId + " is unauthorized to make changes to recipe with id " + toDelete.getRecipeid());
+        }
     }
 }

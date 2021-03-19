@@ -4,11 +4,14 @@ import com.jeffreyorndorff.productivity.models.helpermodels.SimpleRecipe;
 import com.jeffreyorndorff.productivity.models.models.Recipe;
 import com.jeffreyorndorff.productivity.services.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +78,36 @@ public class RecipeController {
      */
     @PostMapping(value = "/recipe/author/{authorId}", consumes = "application/JSON")
     public ResponseEntity<?> createRecipe(@PathVariable long authorId, @Valid @RequestBody Recipe recipe) {
-        recipeService.save(recipe, authorId);
+        recipe.setRecipeid(0);
+        recipe = recipeService.save(recipe, authorId);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI newRecipeURI = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{recipeId}")
+                .buildAndExpand(recipe.getRecipeid())
+                .toUri();
+        responseHeaders.setLocation(newRecipeURI);
+
+        return new ResponseEntity<>(recipe, responseHeaders, HttpStatus.CREATED);
+    }
+
+    // TODO: Once authentication is added, use SecurityContext to validate author
+    /*
+     * Update recipe by recipe.
+     */
+    @PatchMapping(value = "/recipe/author/{authorId}", consumes = "application/JSON")
+    public ResponseEntity<?> updateRecipe(@PathVariable long authorId, @Valid @RequestBody Recipe recipe) throws IllegalAccessException {
+        recipeService.update(recipe, authorId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // TODO: Once authentication is added, use SecurityContext to validate author
+    /*
+    * Author delete recipe by id
+    */
+    @DeleteMapping(value = "/recipe/{recipeId}/author/{authorId}")
+    public ResponseEntity<?> deleteRecipeById(@PathVariable long recipeId, @PathVariable long authorId) throws IllegalAccessException {
+        recipeService.delete(recipeId, authorId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
