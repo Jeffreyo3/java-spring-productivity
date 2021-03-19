@@ -4,8 +4,7 @@ import com.jeffreyorndorff.productivity.models.helpermodels.SimpleItem;
 import com.jeffreyorndorff.productivity.models.helpermodels.SimpleRecipe;
 import com.jeffreyorndorff.productivity.models.helpermodels.SimpleRecipeAuthor;
 import com.jeffreyorndorff.productivity.models.helpermodels.SimpleRecipeItem;
-import com.jeffreyorndorff.productivity.models.models.Recipe;
-import com.jeffreyorndorff.productivity.models.models.RecipeItem;
+import com.jeffreyorndorff.productivity.models.models.*;
 import com.jeffreyorndorff.productivity.repositories.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +22,12 @@ public class RecipeServiceImpl implements RecipeService {
     @Autowired
     private RecipeRepository reciperepo;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ItemService itemService;
+
     @Override
     public SimpleRecipe convertToSimpleRecipe(Recipe recipe) {
         SimpleRecipeAuthor author = new SimpleRecipeAuthor(
@@ -33,7 +38,7 @@ public class RecipeServiceImpl implements RecipeService {
         );
 
         Set<SimpleRecipeItem> recipeItems = new HashSet<>();
-        for(RecipeItem ri : recipe.getItems()) {
+        for (RecipeItem ri : recipe.getItems()) {
             SimpleItem item = new SimpleItem(
                     ri.getItem().getItemid(),
                     ri.getItem().getItem(),
@@ -81,5 +86,37 @@ public class RecipeServiceImpl implements RecipeService {
         reciperepo.findAllByAuthor_Userid(authorId).iterator().forEachRemaining(list::add);
 
         return list;
+    }
+
+    @Override
+    public void save(Recipe recipe, long authorId) {
+        User author = userService.findUserById(authorId);
+
+        Recipe newRecipe = new Recipe();
+        newRecipe.setRecipe(recipe.getRecipe());
+        newRecipe.setInstructions(recipe.getInstructions());
+        newRecipe.setAuthor(author);
+
+        newRecipe.getItems().clear();
+        for (RecipeItem ri : recipe.getItems()) {
+            Item item = itemService.findItemById(ri.getItem().getItemid());
+
+            RecipeItem newRI = new RecipeItem(
+                    newRecipe,
+                    item,
+                    ri.getQuantity(),
+                    ri.getMeasurement()
+            );
+
+            newRecipe.getItems().add(newRI);
+        }
+
+        // new recipe will default to only subscriber being author
+        newRecipe.getSubscribedUsers().clear();
+        newRecipe.getSubscribedUsers().add(
+                new UserSubscribedRecipe(author, newRecipe)
+        );
+
+        reciperepo.save(newRecipe);
     }
 }

@@ -6,11 +6,9 @@ import com.jeffreyorndorff.productivity.services.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,5 +67,15 @@ public class RecipeController {
 
         // otherwise, return full recipe objects
         return new ResponseEntity<>(recipes, HttpStatus.OK);
+    }
+
+    // TODO: Once authentication is added, use SecurityContext to grab userId for the authorId
+    /*
+     * Create new recipe
+     */
+    @PostMapping(value = "/recipe/author/{authorId}", consumes = "application/JSON")
+    public ResponseEntity<?> createRecipe(@PathVariable long authorId, @Valid @RequestBody Recipe recipe) {
+        recipeService.save(recipe, authorId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

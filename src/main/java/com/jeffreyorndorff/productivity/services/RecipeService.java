@@ -14,4 +14,5 @@ public interface RecipeService {
 
     SimpleRecipe convertToSimpleRecipe(Recipe recipe);
 
+    void save(Recipe recipe, long authorId);
 }
