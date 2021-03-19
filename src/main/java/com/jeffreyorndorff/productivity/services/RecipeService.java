@@ -8,7 +8,10 @@ import java.util.List;
 public interface RecipeService {
     Recipe findRecipeById(long id);
 
+    List<Recipe> findAllByAuthorId(long authorId);
+
     List<SimpleRecipe> findAll();
 
     SimpleRecipe convertToSimpleRecipe(Recipe recipe);
+
 }

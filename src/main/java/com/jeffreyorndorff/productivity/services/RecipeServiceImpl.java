@@ -74,4 +74,12 @@ public class RecipeServiceImpl implements RecipeService {
 
         return list;
     }
+
+    @Override
+    public List<Recipe> findAllByAuthorId(long authorId) {
+        List<Recipe> list = new ArrayList<>();
+        reciperepo.findAllByAuthor_Userid(authorId).iterator().forEachRemaining(list::add);
+
+        return list;
+    }
 }

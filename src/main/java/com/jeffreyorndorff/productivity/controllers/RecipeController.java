@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,9 +31,9 @@ public class RecipeController {
 
     // TODO: Use SecurityContext to validate logged-in user once auth is added
     /*
-    * Get Recipe based on ID
-    * What is returned is based on whether userid == authorid
-    */
+     * Get Recipe based on ID
+     * What is returned is based on whether userid == authorid
+     */
     @GetMapping(value = "/recipe/{recipeId}/user/{userId}", produces = "application/JSON")
     public ResponseEntity<?> getRecipeById(@PathVariable long recipeId, @PathVariable long userId) {
         Recipe recipe = recipeService.findRecipeById(recipeId);
@@ -45,5 +46,28 @@ public class RecipeController {
 
         // otherwise, return full recipe object
         return new ResponseEntity<>(recipe, HttpStatus.OK);
+    }
+
+    // TODO: Use SecurityContext to validate logged-in user once auth is added
+    /*
+     * Get all recipes by a given author
+     * What is returned is based on whether userid == authorid
+     */
+    @GetMapping(value = "/author/{authorId}/user/{userId}", produces = "application/JSON")
+    public ResponseEntity<?> findAllRecipesByAuthorId(@PathVariable long authorId, @PathVariable long userId) {
+        List<Recipe> recipes = recipeService.findAllByAuthorId(authorId);
+
+        // if our user is not the author, hide subscriber info
+        if (authorId != userId) {
+            List<SimpleRecipe> simpleRecipes = new ArrayList<>();
+            for (Recipe r : recipes) {
+                simpleRecipes.add(recipeService.convertToSimpleRecipe(r));
+            }
+
+            return new ResponseEntity<>(simpleRecipes, HttpStatus.OK);
+        }
+
+        // otherwise, return full recipe objects
+        return new ResponseEntity<>(recipes, HttpStatus.OK);
     }
 }
