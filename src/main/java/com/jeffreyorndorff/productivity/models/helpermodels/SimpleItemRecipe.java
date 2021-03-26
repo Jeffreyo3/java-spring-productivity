@@ -1,6 +1,6 @@
-package com.jeffreyorndorff.productivity.helpermodels;
+package com.jeffreyorndorff.productivity.models.helpermodels;
 
-import com.jeffreyorndorff.productivity.models.Recipe;
+import com.jeffreyorndorff.productivity.models.models.Recipe;
 
 public class SimpleItemRecipe {
     private Recipe recipe;

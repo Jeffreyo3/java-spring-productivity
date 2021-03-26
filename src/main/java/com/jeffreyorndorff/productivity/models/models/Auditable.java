@@ -1,4 +1,4 @@
-package com.jeffreyorndorff.productivity.models;
+package com.jeffreyorndorff.productivity.models.models;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;

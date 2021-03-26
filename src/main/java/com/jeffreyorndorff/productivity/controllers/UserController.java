@@ -1,7 +1,7 @@
 package com.jeffreyorndorff.productivity.controllers;
 
-import com.jeffreyorndorff.productivity.helpermodels.CreatedUser;
-import com.jeffreyorndorff.productivity.models.User;
+import com.jeffreyorndorff.productivity.models.helpermodels.CreatedUser;
+import com.jeffreyorndorff.productivity.models.models.User;
 import com.jeffreyorndorff.productivity.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

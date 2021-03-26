@@ -1,8 +1,8 @@
 package com.jeffreyorndorff.productivity.controllers;
 
-import com.jeffreyorndorff.productivity.helpermodels.SimpleItemWithRecipes;
-import com.jeffreyorndorff.productivity.helpermodels.SimpleUserItem;
-import com.jeffreyorndorff.productivity.models.Item;
+import com.jeffreyorndorff.productivity.models.helpermodels.SimpleItemWithRecipes;
+import com.jeffreyorndorff.productivity.models.helpermodels.SimpleUserItem;
+import com.jeffreyorndorff.productivity.models.models.Item;
 import com.jeffreyorndorff.productivity.services.ItemService;
 import com.jeffreyorndorff.productivity.services.UserItemService;
 import org.springframework.beans.factory.annotation.Autowired;

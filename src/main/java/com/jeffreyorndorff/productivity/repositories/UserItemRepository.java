@@ -1,7 +1,7 @@
 package com.jeffreyorndorff.productivity.repositories;
 
-import com.jeffreyorndorff.productivity.models.User;
-import com.jeffreyorndorff.productivity.models.UserItem;
+import com.jeffreyorndorff.productivity.models.models.User;
+import com.jeffreyorndorff.productivity.models.models.UserItem;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

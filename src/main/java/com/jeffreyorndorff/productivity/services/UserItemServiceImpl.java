@@ -1,10 +1,10 @@
 package com.jeffreyorndorff.productivity.services;
 
-import com.jeffreyorndorff.productivity.helpermodels.SimpleItem;
-import com.jeffreyorndorff.productivity.helpermodels.SimpleUserItem;
-import com.jeffreyorndorff.productivity.models.Item;
-import com.jeffreyorndorff.productivity.models.User;
-import com.jeffreyorndorff.productivity.models.UserItem;
+import com.jeffreyorndorff.productivity.models.helpermodels.SimpleItem;
+import com.jeffreyorndorff.productivity.models.helpermodels.SimpleUserItem;
+import com.jeffreyorndorff.productivity.models.models.Item;
+import com.jeffreyorndorff.productivity.models.models.User;
+import com.jeffreyorndorff.productivity.models.models.UserItem;
 import com.jeffreyorndorff.productivity.repositories.UserItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

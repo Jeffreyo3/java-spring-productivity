@@ -1,7 +1,7 @@
 package com.jeffreyorndorff.productivity.services;
 
-import com.jeffreyorndorff.productivity.helpermodels.SimpleTask;
-import com.jeffreyorndorff.productivity.models.Task;
+import com.jeffreyorndorff.productivity.models.helpermodels.SimpleTask;
+import com.jeffreyorndorff.productivity.models.models.Task;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.jeffreyorndorff.productivity.helpermodels;
+package com.jeffreyorndorff.productivity.models.helpermodels;
 
 public class SimpleTask {
     private long taskid;

@@ -1,6 +1,6 @@
 package com.jeffreyorndorff.productivity.controllers;
 
-import com.jeffreyorndorff.productivity.models.Category;
+import com.jeffreyorndorff.productivity.models.models.Category;
 import com.jeffreyorndorff.productivity.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
