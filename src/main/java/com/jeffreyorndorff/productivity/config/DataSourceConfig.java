@@ -24,7 +24,7 @@ public class DataSourceConfig
     /**
      * Reads values from application.properties. If local.run.db does not exist, default to H2
      */
-    @Value("${local.run.db:H2}")
+    @Value("${local.run.db:}")
     private String dbValue;
 
     String myUrlString;
