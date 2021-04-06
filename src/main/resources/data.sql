@@ -41,10 +41,12 @@ INSERT INTO items(itemid, item, price, url, created_by, created_date, last_modif
 
 INSERT INTO users(userid, username, password, email, fname, lname, created_by, created_date,
                   last_modified_by, last_modified_date)
-    VALUES (1, 'testuser', 'testpass', 'test@email.com', 'Test', 'McTesting', 'SYSTEM',
+    VALUES (1, 'testuser', '$2y$12$2adxgBoimZecCNJQq8g.VuMdNwqC6PXO7MeRoSpVeUjb7b1LSvPmO', 'test@email.com', 'Test', 'McTesting', 'SYSTEM',
             CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
-           (2, 'testadmin', 'testadminpass', 'admin@testemail.com', 'Admin', 'Senior', 'SYSTEM',
+--            testuser, testpass
+           (2, 'testadmin', '$2y$12$tCRqcpu9NOcoIFeK555/3OKOKt9rZSgMgcKeQ9mutTn3uc3qeyjw2', 'admin@testemail.com', 'Admin', 'Senior', 'SYSTEM',
             CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
+--            testadmin, testadminpass
 
 INSERT INTO userroles(roleid, userid, created_by, created_date, last_modified_by,
                       last_modified_date)

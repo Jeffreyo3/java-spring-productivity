@@ -3,12 +3,15 @@ package com.jeffreyorndorff.productivity.controllers;
 import com.jeffreyorndorff.productivity.models.helpermodels.SimpleItemWithRecipes;
 import com.jeffreyorndorff.productivity.models.helpermodels.SimpleUserItem;
 import com.jeffreyorndorff.productivity.models.models.Item;
+import com.jeffreyorndorff.productivity.models.models.User;
 import com.jeffreyorndorff.productivity.services.ItemService;
 import com.jeffreyorndorff.productivity.services.UserItemService;
+import com.jeffreyorndorff.productivity.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -25,9 +28,12 @@ public class ItemController {
     @Autowired
     private UserItemService userItemService;
 
+    @Autowired
+    private UserService userService;
+
     /*
-    * List all items
-    */
+     * List all items
+     */
     @GetMapping(value = "/items", produces = "application/JSON")
     public ResponseEntity<?> listAllItems() {
         List<SimpleItemWithRecipes> itemList = itemService.findAll();
@@ -35,8 +41,8 @@ public class ItemController {
     }
 
     /*
-    * Get item by item id
-    */
+     * Get item by item id
+     */
     @GetMapping(value = "/item/{itemId}", produces = "application/JSON")
     public ResponseEntity<?> getItemById(@PathVariable long itemId) {
         SimpleItemWithRecipes item = itemService.findSimpleItemById(itemId);
@@ -44,10 +50,10 @@ public class ItemController {
     }
 
     /*
-    * Create new item
-    */
+     * Create new item
+     */
     @PostMapping(value = "/item", consumes = "application/JSON", produces = "application/JSON")
-    public ResponseEntity<?> createItem(@Valid @RequestBody Item newItem){
+    public ResponseEntity<?> createItem(@Valid @RequestBody Item newItem) {
         newItem.setItemid(0);
         newItem = itemService.save(newItem);
 
@@ -64,8 +70,8 @@ public class ItemController {
     }
 
     /*
-    * Update item by id
-    */
+     * Update item by id
+     */
     @PatchMapping(value = "/item/{itemId}", consumes = "application/JSON", produces =
             "application/JSON")
     public ResponseEntity<?> updateItem(@RequestBody Item item, @PathVariable long itemId) {
@@ -75,8 +81,8 @@ public class ItemController {
 
     // TODO: Refactor once Security is implemented - only Admin should be able to use this endpoint
     /*
-    * Delete item by id
-    */
+     * Delete item by id
+     */
     @DeleteMapping(value = "/item/{itemId}", produces = "application/JSON")
     public ResponseEntity<?> deleteItemById(@PathVariable long itemId) {
         itemService.delete(itemId);
@@ -118,12 +124,17 @@ public class ItemController {
 
     // TODO: Refactor once Security is implemented to grab userId from SecurityContext
     /*
-    * Remove UserItem
-    */
-    @DeleteMapping(value = "/user/{userId}/item/{itemId}")
-    public ResponseEntity<?> deleteUserItem(@PathVariable long userId,
-                                            @PathVariable long itemId) {
-        userItemService.delete(userId, itemId);
+     * Remove UserItem
+     */
+    @DeleteMapping(value = "/user/item/{itemId}")
+    public ResponseEntity<?> deleteUserItem(
+//            @PathVariable long userId,
+            @PathVariable long itemId) {
+        User u = userService.findByUsername(SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName()
+        );
+        userItemService.delete(u.getUserid(), itemId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
