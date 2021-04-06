@@ -1,10 +1,15 @@
 package com.jeffreyorndorff.productivity.models.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -67,8 +72,8 @@ public class User extends Auditable {
     }
 
     public User(String username, String password, String fname, String lname, String email) {
-        this.username = username;
-        this.password = password;
+        setUsername(username);
+        setPassword(password);
         this.fname = fname;
         this.lname = lname;
         this.email = email;
@@ -94,7 +99,15 @@ public class User extends Auditable {
         return password;
     }
 
+    /**
+     * @param password the new password (String) for this user. Comes in plain text and saved as encrypted
+     */
     public void setPassword(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.password = passwordEncoder.encode(password);
+    }
+
+    public void setNoEncryptPassword(String password) {
         this.password = password;
     }
 
@@ -160,5 +173,23 @@ public class User extends Auditable {
 
     public void setSubscribedRecipes(Set<UserSubscribedRecipe> subscribedRecipes) {
         this.subscribedRecipes = subscribedRecipes;
+    }
+
+    /**
+     * Internally, user security requires a list of authorities, roles, that the user has. This method is a simple way to provide those.
+     * Note that SimpleGrantedAuthority requests the format ROLE_role name all in capital letters!
+     *
+     * @return The list of authorities, roles, this user object has
+     */
+    @JsonIgnore
+    public List<SimpleGrantedAuthority> getAuthority() {
+        List<SimpleGrantedAuthority> roleList = new ArrayList<>();
+
+        for (UserRole ur : this.roles) {
+            String myRole = "ROLE_" + ur.getRole().getRole().toUpperCase();
+            roleList.add(new SimpleGrantedAuthority(myRole));
+        }
+
+        return roleList;
     }
 }

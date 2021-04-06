@@ -78,7 +78,8 @@ public class UserServiceImpl implements UserService {
         }
 
         newUser.setUsername(user.getUsername().toLowerCase());
-        newUser.setPassword(user.getPassword());
+//        newUser.setPassword(user.getPassword());
+        newUser.setNoEncryptPassword(user.getPassword());
         newUser.setFname(user.getFname());
         newUser.setLname(user.getLname());
         newUser.setEmail(user.getEmail());
@@ -150,7 +151,8 @@ public class UserServiceImpl implements UserService {
         }
 
         if (user.getPassword() != null) {
-            userToUpdate.setPassword(user.getPassword());
+//            userToUpdate.setPassword(user.getPassword());
+            userToUpdate.setNoEncryptPassword(user.getPassword());
         }
 
         if (user.getEmail() != null) {

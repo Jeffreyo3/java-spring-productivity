@@ -13,7 +13,7 @@ import javax.sql.DataSource;
  * Class to set up which database is to be used for the application
  */
 @Configuration
-public class DataSourceConfig
+public class DataSourceConfiguration
 {
     /**
      * Reads the value from the environment variable spring.datasource.url. If the environment variable does not exists, defaults to a null string

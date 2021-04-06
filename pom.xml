@@ -55,27 +55,27 @@
         </dependency>
 
 
-        <!--        &lt;!&ndash; Security Dependencies Start &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
+<!--    Security Dependencies Start -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.security</groupId>-->
-<!--            <artifactId>spring-security-test</artifactId>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.security.oauth</groupId>-->
-<!--            <artifactId>spring-security-oauth2</artifactId>-->
-<!--            <version>2.3.6.RELEASE</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; Security Dependencies End &ndash;&gt;-->
+        <dependency>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+            <version>2.3.6.RELEASE</version>
+        </dependency>
+<!--    Security Dependencies End -->
 
-<!--        &lt;!&ndash; Swagger Dependencies Start &ndash;&gt;-->
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 &ndash;&gt;-->
+<!--    Swagger Dependencies Start -->
+<!--        https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
 <!--        <dependency>-->
 <!--            <groupId>io.springfox</groupId>-->
 <!--            <artifactId>springfox-swagger2</artifactId>-->
@@ -94,7 +94,7 @@
 <!--            <artifactId>springfox-bean-validators</artifactId>-->
 <!--            <version>2.9.2</version>-->
 <!--        </dependency>-->
-<!--        &lt;!&ndash; Swagger Dependencies End &ndash;&gt;-->
+<!--    Swagger Dependencies End -->
     </dependencies>
 
     <build>
