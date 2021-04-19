@@ -80,6 +80,7 @@ public class UserItemServiceImpl implements UserItemService {
         return uiList.get(0);
     }
 
+    @Transactional
     @Override
     public SimpleUserItem save(SimpleUserItem userItem, long userId) {
         Item item = itemService.findItemById(userItem.getItem().getItemid());
@@ -101,6 +102,7 @@ public class UserItemServiceImpl implements UserItemService {
         );
     }
 
+    @Transactional
     @Override
     public void update(SimpleUserItem userItem, long userId) {
         UserItem ui = findByUseridAndItemid(userId, userItem.getItem().getItemid());

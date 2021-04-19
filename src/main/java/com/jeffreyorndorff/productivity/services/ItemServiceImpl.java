@@ -67,6 +67,7 @@ public class ItemServiceImpl implements ItemService{
         return convertItemToSimpleItem(item);
     }
 
+    @Transactional
     @Override
     public Item save(Item item) {
         Item newItem = new Item();
@@ -101,6 +102,7 @@ public class ItemServiceImpl implements ItemService{
         return itemrepo.save(newItem);
     }
 
+    @Transactional
     @Override
     public Item update(Item item, long itemId) {
         Item itemToUpdate = findItemById(itemId);

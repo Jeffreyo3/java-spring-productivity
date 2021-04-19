@@ -41,6 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryrepo.findByCategoryIgnoringCase(category);
     }
 
+    @Transactional
     @Override
     public Category save(Category category) {
         Category newCategory = new Category();
@@ -65,6 +66,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryrepo.save(newCategory);
     }
 
+    @Transactional
     @Override
     public Category update(Category category, long categoryId) {
         if (categoryrepo.findById(categoryId).isPresent()) {
@@ -83,7 +85,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Transactional
-
     @Override
     public void delete(long id) {
         if (categoryrepo.findById(id).isPresent()) {

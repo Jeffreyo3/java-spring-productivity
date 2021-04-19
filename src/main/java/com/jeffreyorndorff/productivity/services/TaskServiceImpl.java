@@ -74,6 +74,7 @@ public class TaskServiceImpl implements TaskService{
         return list;
     }
 
+    @Transactional
     @Override
     public SimpleTask save(SimpleTask newTask, long userId) {
         User user = userService.findUserById(userId);
@@ -91,6 +92,7 @@ public class TaskServiceImpl implements TaskService{
         return newTask;
     }
 
+    @Transactional
     @Override
     public void toggleComplete(long taskId) {
         Task task = findTaskById(taskId);
@@ -98,6 +100,7 @@ public class TaskServiceImpl implements TaskService{
         task.setCompleted(!task.isCompleted());
     }
 
+    @Transactional
     @Override
     public void update(long taskId, SimpleTask updatedTask) {
         Task task = findTaskById(taskId);

@@ -88,6 +88,7 @@ public class RecipeServiceImpl implements RecipeService {
         return list;
     }
 
+    @Transactional
     @Override
     public Recipe save(Recipe recipe, long authorId) {
         User author = userService.findUserById(authorId);
@@ -120,6 +121,7 @@ public class RecipeServiceImpl implements RecipeService {
         return reciperepo.save(newRecipe);
     }
 
+    @Transactional
     @Override
     public void update(Recipe recipe, long authorId) throws IllegalAccessException {
         User author = userService.findUserById(authorId);

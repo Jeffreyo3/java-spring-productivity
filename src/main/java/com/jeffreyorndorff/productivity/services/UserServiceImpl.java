@@ -136,6 +136,7 @@ public class UserServiceImpl implements UserService {
         return userrepo.save(newUser);
     }
 
+    @Transactional
     @Override
     public User update(User user, long id) {
         User userToUpdate = findUserById(id);
